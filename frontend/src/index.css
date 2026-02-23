@@ -1,0 +1,201 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+  /* Colors */
+  --color-primary: #1B5E20;
+  --color-primary-light: #2E7D32;
+  --color-primary-dark: #124016;
+  --color-surface: #ffffff;
+  --color-background: #f7f9fc;
+  --color-text: #1f2937;
+  --color-text-muted: #6b7280;
+  --color-border: #e5e7eb;
+  --color-error: #ef4444;
+  --color-success: #10b981;
+  --color-warning: #f59e0b;
+  
+  /* Status Colors (Badges, etc) */
+  --status-active-bg: #d1fae5;
+  --status-active-text: #065f46;
+  --status-inactive-bg: #fee2e2;
+  --status-inactive-text: #991b1b;
+  --status-repair-bg: #fef3c7;
+  --status-repair-text: #92400e;
+  --status-retired-bg: #f3f4f6;
+  --status-retired-text: #374151;
+
+  /* Typography */
+  --font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  
+  /* Metrics */
+  --border-radius-sm: 4px;
+  --border-radius: 8px;
+  --border-radius-lg: 12px;
+  --box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+[data-theme='dark'] {
+  --color-primary: #2E7D32;
+  --color-primary-light: #4CAF50;
+  --color-primary-dark: #1B5E20;
+  --color-surface: #1f2937;
+  --color-background: #111827;
+  --color-text: #f9fafb;
+  --color-text-muted: #9ca3af;
+  --color-border: #374151;
+  --color-error: #f87171;
+  
+  --status-active-bg: rgba(16, 185, 129, 0.2);
+  --status-active-text: #34d399;
+  --status-inactive-bg: rgba(239, 68, 68, 0.2);
+  --status-inactive-text: #f87171;
+  --status-repair-bg: rgba(245, 158, 11, 0.2);
+  --status-repair-text: #fbbf24;
+  --status-retired-bg: rgba(75, 85, 99, 0.2);
+  --status-retired-text: #d1d5db;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-family);
+  background-color: var(--color-background);
+  color: var(--color-text);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: var(--color-primary);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* Base utility classes for layout */
+.app-container {
+  display: flex;
+  min-height: 100vh;
+}
+
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--color-background);
+  overflow-x: hidden;
+}
+
+.content-area {
+  padding: 24px;
+  flex: 1;
+  overflow-y: auto;
+}
+
+/* Card */
+.card {
+  background-color: var(--color-surface);
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  border: 1px solid var(--color-border);
+  padding: 24px;
+}
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: var(--border-radius-sm);
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: 1px solid transparent;
+  font-family: var(--font-family);
+  font-size: 14px;
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btn-primary {
+  background-color: var(--color-primary);
+  color: white;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background-color: var(--color-primary-dark);
+}
+
+.btn-secondary {
+  background-color: var(--color-surface);
+  color: var(--color-text);
+  border-color: var(--color-border);
+}
+
+.btn-secondary:hover:not(:disabled) {
+  background-color: var(--color-background);
+  border-color: var(--color-text-muted);
+}
+
+.btn-danger {
+  background-color: var(--color-error);
+  color: white;
+}
+
+/* Forms */
+.form-group {
+  margin-bottom: 16px;
+}
+
+.form-label {
+  display: block;
+  font-weight: 500;
+  margin-bottom: 6px;
+  font-size: 14px;
+  color: var(--color-text);
+}
+
+.form-control {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: var(--border-radius-sm);
+  border: 1px solid var(--color-border);
+  background-color: var(--color-surface);
+  color: var(--color-text);
+  font-family: var(--font-family);
+  font-size: 14px;
+  transition: border-color 0.2s;
+}
+
+.form-control:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(27, 94, 32, 0.1);
+}
+
+/* Loading Spinner */
+.spinner {
+  width: 24px;
+  height: 24px;
+  border: 3px solid var(--color-border);
+  border-top-color: var(--color-primary);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

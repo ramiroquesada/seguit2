@@ -1,0 +1,45 @@
+
+> backend@0.0.1 build
+> nest build
+
+[96msrc/equipment/equipment.service.ts[0m:[93m103[0m:[93m37[0m - [91merror[0m[90m TS2345: [0mArgument of type '{ by: "status"[]; _count: { status: true; }; }' is not assignable to parameter of type '{ where?: EquipmentWhereInput | undefined; orderBy?: EquipmentOrderByWithAggregationInput | EquipmentOrderByWithAggregationInput[] | undefined; ... 8 more ...; _max?: EquipmentMaxAggregateInputType | undefined; } & { ...; }'.
+  Property 'orderBy' is missing in type '{ by: "status"[]; _count: { status: true; }; }' but required in type '{ orderBy: EquipmentOrderByWithAggregationInput | EquipmentOrderByWithAggregationInput[] | undefined; }'.
+
+[7m103[0m       this.prisma.equipment.groupBy({ by: ['status'], _count: { status: true } }),
+[7m   [0m [91m                                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+  [96mnode_modules/.prisma/client/index.d.ts[0m:[93m6702[0m:[93m13[0m
+    [7m6702[0m         ? { orderBy: EquipmentGroupByArgs['orderBy'] }
+    [7m    [0m [96m            ~~~~~~~[0m
+    'orderBy' is declared here.
+[96msrc/equipment/equipment.service.ts[0m:[93m104[0m:[93m37[0m - [91merror[0m[90m TS2345: [0mArgument of type '{ by: "type"[]; _count: { type: true; }; }' is not assignable to parameter of type '{ where?: EquipmentWhereInput | undefined; orderBy?: EquipmentOrderByWithAggregationInput | EquipmentOrderByWithAggregationInput[] | undefined; ... 8 more ...; _max?: EquipmentMaxAggregateInputType | undefined; } & { ...; }'.
+  Property 'orderBy' is missing in type '{ by: "type"[]; _count: { type: true; }; }' but required in type '{ orderBy: EquipmentOrderByWithAggregationInput | EquipmentOrderByWithAggregationInput[] | undefined; }'.
+
+[7m104[0m       this.prisma.equipment.groupBy({ by: ['type'], _count: { type: true } }),
+[7m   [0m [91m                                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+  [96mnode_modules/.prisma/client/index.d.ts[0m:[93m6702[0m:[93m13[0m
+    [7m6702[0m         ? { orderBy: EquipmentGroupByArgs['orderBy'] }
+    [7m    [0m [96m            ~~~~~~~[0m
+    'orderBy' is declared here.
+[96msrc/equipment/equipment.service.ts[0m:[93m121[0m:[93m38[0m - [91merror[0m[90m TS18048: [0m's._count' is possibly 'undefined'.
+
+[7m121[0m       byStatus.map((s) => [s.status, s._count.status]),
+[7m   [0m [91m                                     ~~~~~~~~[0m
+[96msrc/equipment/equipment.service.ts[0m:[93m121[0m:[93m47[0m - [91merror[0m[90m TS2339: [0mProperty 'status' does not exist on type 'true | { id?: number | undefined; code?: number | undefined; type?: number | undefined; brand?: number | undefined; model?: number | undefined; serial?: number | undefined; status?: number | undefined; ... 6 more ...; _all?: number | undefined; }'.
+  Property 'status' does not exist on type 'true'.
+
+[7m121[0m       byStatus.map((s) => [s.status, s._count.status]),
+[7m   [0m [91m                                              ~~~~~~[0m
+[96msrc/equipment/equipment.service.ts[0m:[93m124[0m:[93m34[0m - [91merror[0m[90m TS18048: [0m't._count' is possibly 'undefined'.
+
+[7m124[0m       byType.map((t) => [t.type, t._count.type]),
+[7m   [0m [91m                                 ~~~~~~~~[0m
+[96msrc/equipment/equipment.service.ts[0m:[93m124[0m:[93m43[0m - [91merror[0m[90m TS2339: [0mProperty 'type' does not exist on type 'true | { id?: number | undefined; code?: number | undefined; type?: number | undefined; brand?: number | undefined; model?: number | undefined; serial?: number | undefined; status?: number | undefined; ... 6 more ...; _all?: number | undefined; }'.
+  Property 'type' does not exist on type 'true'.
+
+[7m124[0m       byType.map((t) => [t.type, t._count.type]),
+[7m   [0m [91m                                          ~~~~[0m
+
+Found 6 error(s).
+

@@ -1,0 +1,1357 @@
+﻿
+> backend@0.0.1 build
+> nest build
+
+node.exe : [96mprisma/seed
+.ts[0m:[93m1[0m:[93m10
+[0m - [91merror[0m[90m 
+TS2305: [0mModule 
+'"@prisma/client"' has no 
+exported member 
+'PrismaClient'.
+En línea: 1 Carácter: 1
++ & "C:\Program 
+Files\nodejs/node.exe" "C:\
+Users\ramir\AppData\Roaming
+\ ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~
+    + CategoryInfo         
+     : NotSpecified: 
+([96mpr    
+isma/see...'PrismaClient   
+ '.:String) [], RemoteExc  
+  eption
+    + 
+FullyQualifiedErrorId     
+: NativeCommandError
+ 
+
+[7m1[0m import { 
+PrismaClient, Role, 
+EquipmentType, 
+EquipmentStatus, 
+HistoryAction } from 
+'@prisma/client';
+[7m [0m [91m         
+~~~~~~~~~~~~[0m
+[96mprisma/seed.ts[0m:[9
+3m1[0m:[93m24[0m - 
+[91merror[0m[90m 
+TS2305: [0mModule 
+'"@prisma/client"' has no 
+exported member 'Role'.
+
+[7m1[0m import { 
+PrismaClient, Role, 
+EquipmentType, 
+EquipmentStatus, 
+HistoryAction } from 
+'@prisma/client';
+[7m [0m [91m            
+           ~~~~[0m
+[96mprisma/seed.ts[0m:[9
+3m1[0m:[93m30[0m - 
+[91merror[0m[90m 
+TS2305: [0mModule 
+'"@prisma/client"' has no 
+exported member 
+'EquipmentType'.
+
+[7m1[0m import { 
+PrismaClient, Role, 
+EquipmentType, 
+EquipmentStatus, 
+HistoryAction } from 
+'@prisma/client';
+[7m [0m [91m            
+                 
+~~~~~~~~~~~~~[0m
+[96mprisma/seed.ts[0m:[9
+3m1[0m:[93m45[0m - 
+[91merror[0m[90m 
+TS2305: [0mModule 
+'"@prisma/client"' has no 
+exported member 
+'EquipmentStatus'.
+
+[7m1[0m import { 
+PrismaClient, Role, 
+EquipmentType, 
+EquipmentStatus, 
+HistoryAction } from 
+'@prisma/client';
+[7m [0m [91m            
+                           
+     ~~~~~~~~~~~~~~~[0m
+[96mprisma/seed.ts[0m:[9
+3m1[0m:[93m62[0m - 
+[91merror[0m[90m 
+TS2305: [0mModule 
+'"@prisma/client"' has no 
+exported member 
+'HistoryAction'.
+
+[7m1[0m import { 
+PrismaClient, Role, 
+EquipmentType, 
+EquipmentStatus, 
+HistoryAction } from 
+'@prisma/client';
+[7m [0m [91m            
+                           
+                      
+~~~~~~~~~~~~~[0m
+[96msrc/auth/auth.service.
+ts[0m:[93m14[0m:[93m36
+[0m - [91merror[0m[90m 
+TS2339: [0mProperty 
+'user' does not exist on 
+type 'PrismaService'.
+
+[7m14[0m     const user 
+= await this.prisma.user.fi
+ndUnique({ where: { 
+username } });
+[7m  [0m [91m           
+                        
+~~~~[0m
+[96msrc/auth/auth.service.
+ts[0m:[93m40[0m:[93m36
+[0m - [91merror[0m[90m 
+TS2339: [0mProperty 
+'user' does not exist on 
+type 'PrismaService'.
+
+[7m40[0m     const user 
+= await this.prisma.user.fi
+ndUnique({
+[7m  [0m [91m           
+                        
+~~~~[0m
+[96msrc/auth/jwt.strategy.
+ts[0m:[93m21[0m:[93m36
+[0m - [91merror[0m[90m 
+TS2339: [0mProperty 
+'user' does not exist on 
+type 'PrismaService'.
+
+[7m21[0m     const user 
+= await this.prisma.user.fi
+ndUnique({ where: { id: 
+payload.sub } });
+[7m  [0m [91m           
+                        
+~~~~[0m
+[96msrc/auth/roles.decorat
+or.ts[0m:[93m2[0m:[93m1
+0[0m - 
+[91merror[0m[90m 
+TS2305: [0mModule 
+'"@prisma/client"' has no 
+exported member 'Role'.
+
+[7m2[0m import { Role } 
+from '@prisma/client';
+[7m [0m [91m         
+~~~~[0m
+[96msrc/auth/roles.guard.t
+s[0m:[93m3[0m:[93m10[0
+m - [91merror[0m[90m 
+TS2305: [0mModule 
+'"@prisma/client"' has no 
+exported member 'Role'.
+
+[7m3[0m import { Role } 
+from '@prisma/client';
+[7m [0m [91m         
+~~~~[0m
+[96msrc/config-locations/c
+onfig-locations.service.ts
+[0m:[93m11[0m:[93m24[0m
+ - [91merror[0m[90m 
+TS2339: [0mProperty 
+'city' does not exist on 
+type 'PrismaService'.
+
+[7m11[0m     return 
+this.prisma.city.findMany({
+[7m  [0m [91m           
+            ~~~~[0m
+[96msrc/config-locations/c
+onfig-locations.service.ts
+[0m:[93m18[0m:[93m24[0m
+ - [91merror[0m[90m 
+TS2339: [0mProperty 
+'city' does not exist on 
+type 'PrismaService'.
+
+[7m18[0m     return 
+this.prisma.city.create({ 
+data: { name: dto.name } 
+});
+[7m  [0m [91m           
+            ~~~~[0m
+[96msrc/config-locations/c
+onfig-locations.service.ts
+[0m:[93m22[0m:[93m24[0m
+ - [91merror[0m[90m 
+TS2339: [0mProperty 
+'city' does not exist on 
+type 'PrismaService'.
+
+[7m22[0m     return 
+this.prisma.city.update({ 
+where: { id }, data: { 
+name } });
+[7m  [0m [91m           
+            ~~~~[0m
+[96msrc/config-locations/c
+onfig-locations.service.ts
+[0m:[93m26[0m:[93m40[0m
+ - [91merror[0m[90m 
+TS2339: [0mProperty 
+'section' does not exist 
+on type 'PrismaService'.
+
+[7m26[0m     const 
+sections = await this.prism
+a.section.count({ where: { 
+cityId: id } });
+[7m  [0m [91m           
+                           
+ ~~~~~~~[0m
+[96msrc/config-locations/c
+onfig-locations.service.ts
+[0m:[93m28[0m:[93m24[0m
+ - [91merror[0m[90m 
+TS2339: [0mProperty 
+'city' does not exist on 
+type 'PrismaService'.
+
+[7m28[0m     return 
+this.prisma.city.delete({ 
+where: { id } });
+[7m  [0m [91m           
+            ~~~~[0m
+[96msrc/config-locations/c
+onfig-locations.service.ts
+[0m:[93m33[0m:[93m24[0m
+ - [91merror[0m[90m 
+TS2339: [0mProperty 
+'section' does not exist 
+on type 'PrismaService'.
+
+[7m33[0m     return this.
+prisma.section.findMany({
+[7m  [0m [91m           
+            ~~~~~~~[0m
+[96msrc/config-locations/c
+onfig-locations.service.ts
+[0m:[93m41[0m:[93m24[0m
+ - [91merror[0m[90m 
+TS2339: [0mProperty 
+'section' does not exist 
+on type 'PrismaService'.
+
+[7m41[0m     return this.
+prisma.section.create({
+[7m  [0m [91m           
+            ~~~~~~~[0m
+[96msrc/config-locations/c
+onfig-locations.service.ts
+[0m:[93m48[0m:[93m24[0m
+ - [91merror[0m[90m 
+TS2339: [0mProperty 
+'section' does not exist 
+on type 'PrismaService'.
+
+[7m48[0m     return this.
+prisma.section.update({ 
+where: { id }, data: { 
+name } });
+[7m  [0m [91m           
+            ~~~~~~~[0m
+[96msrc/config-locations/c
+onfig-locations.service.ts
+[0m:[93m52[0m:[93m39[0m
+ - [91merror[0m[90m 
+TS2339: [0mProperty 
+'office' does not exist on 
+type 'PrismaService'.
+
+[7m52[0m     const 
+offices = await 
+this.prisma.office.count({ 
+where: { sectionId: id } 
+});
+[7m  [0m [91m           
+                           
+~~~~~~[0m
+[96msrc/config-locations/c
+onfig-locations.service.ts
+[0m:[93m54[0m:[93m24[0m
+ - [91merror[0m[90m 
+TS2339: [0mProperty 
+'section' does not exist 
+on type 'PrismaService'.
+
+[7m54[0m     return this.
+prisma.section.delete({ 
+where: { id } });
+[7m  [0m [91m           
+            ~~~~~~~[0m
+[96msrc/config-locations/c
+onfig-locations.service.ts
+[0m:[93m59[0m:[93m24[0m
+ - [91merror[0m[90m 
+TS2339: [0mProperty 
+'office' does not exist on 
+type 'PrismaService'.
+
+[7m59[0m     return this.
+prisma.office.findMany({
+[7m  [0m [91m           
+            ~~~~~~[0m
+[96msrc/config-locations/c
+onfig-locations.service.ts
+[0m:[93m67[0m:[93m24[0m
+ - [91merror[0m[90m 
+TS2339: [0mProperty 
+'office' does not exist on 
+type 'PrismaService'.
+
+[7m67[0m     return 
+this.prisma.office.create({
+[7m  [0m [91m           
+            ~~~~~~[0m
+[96msrc/config-locations/c
+onfig-locations.service.ts
+[0m:[93m74[0m:[93m24[0m
+ - [91merror[0m[90m 
+TS2339: [0mProperty 
+'office' does not exist on 
+type 'PrismaService'.
+
+[7m74[0m     return this.
+prisma.office.update({ 
+where: { id }, data: { 
+name } });
+[7m  [0m [91m           
+            ~~~~~~[0m
+[96msrc/config-locations/c
+onfig-locations.service.ts
+[0m:[93m78[0m:[93m41[0m
+ - [91merror[0m[90m 
+TS2339: [0mProperty 
+'equipment' does not exist 
+on type 'PrismaService'.
+
+[7m78[0m     const 
+equipment = await this.pris
+ma.equipment.count({ 
+where: { officeId: id } });
+[7m  [0m [91m           
+                           
+  ~~~~~~~~~[0m
+[96msrc/config-locations/c
+onfig-locations.service.ts
+[0m:[93m80[0m:[93m24[0m
+ - [91merror[0m[90m 
+TS2339: [0mProperty 
+'office' does not exist on 
+type 'PrismaService'.
+
+[7m80[0m     return this.
+prisma.office.delete({ 
+where: { id } });
+[7m  [0m [91m           
+            ~~~~~~[0m
+[96msrc/equipment/equipmen
+t.dto.ts[0m:[93m2[0m:[9
+3m10[0m - 
+[91merror[0m[90m 
+TS2305: [0mModule 
+'"@prisma/client"' has no 
+exported member 
+'EquipmentType'.
+
+[7m2[0m import { 
+EquipmentType, 
+EquipmentStatus } from 
+'@prisma/client';
+[7m [0m [91m         
+~~~~~~~~~~~~~[0m
+[96msrc/equipment/equipmen
+t.dto.ts[0m:[93m2[0m:[9
+3m25[0m - 
+[91merror[0m[90m 
+TS2305: [0mModule 
+'"@prisma/client"' has no 
+exported member 
+'EquipmentStatus'.
+
+[7m2[0m import { 
+EquipmentType, 
+EquipmentStatus } from 
+'@prisma/client';
+[7m [0m [91m            
+            
+~~~~~~~~~~~~~~~[0m
+[96msrc/equipment/equipmen
+t.dto.ts[0m:[93m3[0m:[9
+3m29[0m - 
+[91merror[0m[90m 
+TS2307: [0mCannot find 
+module 
+'@nestjs/mapped-types' or 
+its corresponding type 
+declarations.
+
+[7m3[0m import { 
+PartialType } from 
+'@nestjs/mapped-types';
+[7m [0m [91m            
+                
+~~~~~~~~~~~~~~~~~~~~~~[0m
+[96msrc/equipment/equipmen
+t.service.ts[0m:[93m4[0m
+:[93m10[0m - 
+[91merror[0m[90m 
+TS2305: [0mModule 
+'"@prisma/client"' has no 
+exported member 
+'EquipmentStatus'.
+
+[7m4[0m import { 
+EquipmentStatus, 
+HistoryAction } from 
+'@prisma/client';
+[7m [0m [91m         
+~~~~~~~~~~~~~~~[0m
+[96msrc/equipment/equipmen
+t.service.ts[0m:[93m4[0m
+:[93m27[0m - 
+[91merror[0m[90m 
+TS2305: [0mModule 
+'"@prisma/client"' has no 
+exported member 
+'HistoryAction'.
+
+[7m4[0m import { 
+EquipmentStatus, 
+HistoryAction } from 
+'@prisma/client';
+[7m [0m [91m            
+              
+~~~~~~~~~~~~~[0m
+[96msrc/equipment/equipmen
+t.service.ts[0m:[93m74[0
+m:[93m45[0m - 
+[91merror[0m[90m 
+TS2339: [0mProperty 
+'$transaction' does not 
+exist on type 
+'PrismaService'.
+
+[7m74[0m     const 
+[data, total] = await 
+this.prisma.$transaction([
+[7m  [0m [91m           
+                           
+      ~~~~~~~~~~~~[0m
+[96msrc/equipment/equipmen
+t.service.ts[0m:[93m75[0
+m:[93m19[0m - 
+[91merror[0m[90m 
+TS2339: [0mProperty 
+'equipment' does not exist 
+on type 'PrismaService'.
+
+[7m75[0m       this.prism
+a.equipment.findMany({
+[7m  [0m [91m           
+       ~~~~~~~~~[0m
+[96msrc/equipment/equipmen
+t.service.ts[0m:[93m82[0
+m:[93m19[0m - 
+[91merror[0m[90m 
+TS2339: [0mProperty 
+'equipment' does not exist 
+on type 'PrismaService'.
+
+[7m82[0m       this.prism
+a.equipment.count({ where 
+}),
+[7m  [0m [91m           
+       ~~~~~~~~~[0m
+[96msrc/equipment/equipmen
+t.service.ts[0m:[93m92[0
+m:[93m34[0m - 
+[91merror[0m[90m 
+TS2339: [0mProperty 
+'equipment' does not exist 
+on type 'PrismaService'.
+
+[7m92[0m     const eq = 
+await this.prisma.equipment
+.findUnique({
+[7m  [0m [91m           
+                      
+~~~~~~~~~[0m
+[96msrc/equipment/equipmen
+t.service.ts[0m:[93m101[
+0m:[93m65[0m - 
+[91merror[0m[90m 
+TS2339: [0mProperty 
+'$transaction' does not 
+exist on type 
+'PrismaService'.
+
+[7m101[0m     const 
+[total, byStatus, byType, 
+byCity] = await 
+this.prisma.$transaction([
+[7m   [0m [91m          
+                           
+                           
+~~~~~~~~~~~~[0m
+[96msrc/equipment/equipmen
+t.service.ts[0m:[93m102[
+0m:[93m19[0m - 
+[91merror[0m[90m 
+TS2339: [0mProperty 
+'equipment' does not exist 
+on type 'PrismaService'.
+
+[7m102[0m       this.pris
+ma.equipment.count(),
+[7m   [0m [91m          
+        ~~~~~~~~~[0m
+[96msrc/equipment/equipmen
+t.service.ts[0m:[93m103[
+0m:[93m19[0m - 
+[91merror[0m[90m 
+TS2339: [0mProperty 
+'equipment' does not exist 
+on type 'PrismaService'.
+
+[7m103[0m       this.pris
+ma.equipment.groupBy({ by: 
+['status'], _count: { 
+status: true } }),
+[7m   [0m [91m          
+        ~~~~~~~~~[0m
+[96msrc/equipment/equipmen
+t.service.ts[0m:[93m104[
+0m:[93m19[0m - 
+[91merror[0m[90m 
+TS2339: [0mProperty 
+'equipment' does not exist 
+on type 'PrismaService'.
+
+[7m104[0m       this.pris
+ma.equipment.groupBy({ by: 
+['type'], _count: { type: 
+true } }),
+[7m   [0m [91m          
+        ~~~~~~~~~[0m
+[96msrc/equipment/equipmen
+t.service.ts[0m:[93m105[
+0m:[93m19[0m - 
+[91merror[0m[90m 
+TS2339: [0mProperty 
+'city' does not exist on 
+type 'PrismaService'.
+
+[7m105[0m       
+this.prisma.city.findMany({
+[7m   [0m [91m          
+        ~~~~[0m
+[96msrc/equipment/equipmen
+t.service.ts[0m:[93m128[
+0m:[93m38[0m - 
+[91merror[0m[90m 
+TS2339: [0mProperty 
+'equipment' does not exist 
+on type 'PrismaService'.
+
+[7m128[0m     const 
+newest = await this.prisma.
+equipment.findMany({
+[7m   [0m [91m          
+                           
+~~~~~~~~~[0m
+[96msrc/equipment/equipmen
+t.service.ts[0m:[93m138[
+0m:[93m40[0m - 
+[91merror[0m[90m 
+TS2339: [0mProperty 
+'equipment' does not exist 
+on type 'PrismaService'.
+
+[7m138[0m     const 
+existing = await this.prism
+a.equipment.findUnique({ 
+where: { code: dto.code } 
+});
+[7m   [0m [91m          
+                           
+  ~~~~~~~~~[0m
+[96msrc/equipment/equipmen
+t.service.ts[0m:[93m141[
+0m:[93m41[0m - 
+[91merror[0m[90m 
+TS2339: [0mProperty 
+'equipment' does not exist 
+on type 'PrismaService'.
+
+[7m141[0m     const 
+equipment = await this.pris
+ma.equipment.create({
+[7m   [0m [91m          
+                           
+   ~~~~~~~~~[0m
+[96msrc/equipment/equipmen
+t.service.ts[0m:[93m157[
+0m:[93m23[0m - 
+[91merror[0m[90m 
+TS2339: [0mProperty 
+'equipmentHistory' does 
+not exist on type 
+'PrismaService'.
+
+[7m157[0m     await this.
+prisma.equipmentHistory.cre
+ate({
+[7m   [0m [91m          
+            
+~~~~~~~~~~~~~~~~[0m
+[96msrc/equipment/equipmen
+t.service.ts[0m:[93m176[
+0m:[93m13[0m - 
+[91merror[0m[90m 
+TS2339: [0mProperty 
+'status' does not exist on 
+type 'UpdateEquipmentDto'.
+
+[7m176[0m     if 
+(dto.status && dto.status 
+!== current.status) {
+[7m   [0m [91m          
+  ~~~~~~[0m
+[96msrc/equipment/equipmen
+t.service.ts[0m:[93m176[
+0m:[93m27[0m - 
+[91merror[0m[90m 
+TS2339: [0mProperty 
+'status' does not exist on 
+type 'UpdateEquipmentDto'.
+
+[7m176[0m     if 
+(dto.status && dto.status 
+!== current.status) {
+[7m   [0m [91m          
+                ~~~~~~[0m
+[96msrc/equipment/equipmen
+t.service.ts[0m:[93m179[
+0m:[93m68[0m - 
+[91merror[0m[90m 
+TS2339: [0mProperty 
+'status' does not exist on 
+type 'UpdateEquipmentDto'.
+
+[7m179[0m         
+description: `Estado 
+cambiado de 
+${current.status} a 
+${dto.status}`,
+[7m   [0m [91m          
+                           
+                           
+   ~~~~~~[0m
+[96msrc/equipment/equipmen
+t.service.ts[0m:[93m183[
+0m:[93m13[0m - 
+[91merror[0m[90m 
+TS2339: [0mProperty 
+'officeId' does not exist 
+on type 
+'UpdateEquipmentDto'.
+
+[7m183[0m     if 
+(dto.officeId !== 
+undefined && dto.officeId 
+!== (current.office?.id ?? 
+null)) {
+[7m   [0m [91m          
+  ~~~~~~~~[0m
+[96msrc/equipment/equipmen
+t.service.ts[0m:[93m183[
+0m:[93m43[0m - 
+[91merror[0m[90m 
+TS2339: [0mProperty 
+'officeId' does not exist 
+on type 
+'UpdateEquipmentDto'.
+
+[7m183[0m     if 
+(dto.officeId !== 
+undefined && dto.officeId 
+!== (current.office?.id ?? 
+null)) {
+[7m   [0m [91m          
+                           
+     ~~~~~~~~[0m
+[96msrc/equipment/equipmen
+t.service.ts[0m:[93m187[
+0m:[93m81[0m - 
+[91merror[0m[90m 
+TS2339: [0mProperty 
+'officeId' does not exist 
+on type 
+'UpdateEquipmentDto'.
+
+[7m187[0m         extra: 
+{ fromOfficeId: 
+current.office?.id ?? 
+undefined, toOfficeId: 
+dto.officeId },
+[7m   [0m [91m          
+                           
+                           
+                
+~~~~~~~~[0m
+[96msrc/equipment/equipmen
+t.service.ts[0m:[93m191[
+0m:[93m39[0m - 
+[91merror[0m[90m 
+TS2339: [0mProperty 
+'equipment' does not exist 
+on type 'PrismaService'.
+
+[7m191[0m     const 
+updated = await this.prisma
+.equipment.update({
+[7m   [0m [91m          
+                           
+ ~~~~~~~~~[0m
+[96msrc/equipment/equipmen
+t.service.ts[0m:[93m194[
+0m:[93m17[0m - 
+[91merror[0m[90m 
+TS2339: [0mProperty 
+'type' does not exist on 
+type 'UpdateEquipmentDto'.
+
+[7m194[0m         
+...(dto.type && { type: 
+dto.type }),
+[7m   [0m [91m          
+      ~~~~[0m
+[96msrc/equipment/equipmen
+t.service.ts[0m:[93m194[
+0m:[93m37[0m - 
+[91merror[0m[90m 
+TS2339: [0mProperty 
+'type' does not exist on 
+type 'UpdateEquipmentDto'.
+
+[7m194[0m         
+...(dto.type && { type: 
+dto.type }),
+[7m   [0m [91m          
+                          
+~~~~[0m
+[96msrc/equipment/equipmen
+t.service.ts[0m:[93m195[
+0m:[93m17[0m - 
+[91merror[0m[90m 
+TS2339: [0mProperty 
+'brand' does not exist on 
+type 'UpdateEquipmentDto'.
+
+[7m195[0m         
+...(dto.brand && { brand: 
+dto.brand }),
+[7m   [0m [91m          
+      ~~~~~[0m
+[96msrc/equipment/equipmen
+t.service.ts[0m:[93m195[
+0m:[93m39[0m - 
+[91merror[0m[90m 
+TS2339: [0mProperty 
+'brand' does not exist on 
+type 'UpdateEquipmentDto'.
+
+[7m195[0m         
+...(dto.brand && { brand: 
+dto.brand }),
+[7m   [0m [91m          
+                           
+ ~~~~~[0m
+[96msrc/equipment/equipmen
+t.service.ts[0m:[93m196[
+0m:[93m17[0m - 
+[91merror[0m[90m 
+TS2339: [0mProperty 
+'model' does not exist on 
+type 'UpdateEquipmentDto'.
+
+[7m196[0m         
+...(dto.model && { model: 
+dto.model }),
+[7m   [0m [91m          
+      ~~~~~[0m
+[96msrc/equipment/equipmen
+t.service.ts[0m:[93m196[
+0m:[93m39[0m - 
+[91merror[0m[90m 
+TS2339: [0mProperty 
+'model' does not exist on 
+type 'UpdateEquipmentDto'.
+
+[7m196[0m         
+...(dto.model && { model: 
+dto.model }),
+[7m   [0m [91m          
+                           
+ ~~~~~[0m
+[96msrc/equipment/equipmen
+t.service.ts[0m:[93m197[
+0m:[93m17[0m - 
+[91merror[0m[90m 
+TS2339: [0mProperty 
+'serial' does not exist on 
+type 'UpdateEquipmentDto'.
+
+[7m197[0m         
+...(dto.serial !== 
+undefined && { serial: 
+dto.serial }),
+[7m   [0m [91m          
+      ~~~~~~[0m
+[96msrc/equipment/equipmen
+t.service.ts[0m:[93m197[
+0m:[93m55[0m - 
+[91merror[0m[90m 
+TS2339: [0mProperty 
+'serial' does not exist on 
+type 'UpdateEquipmentDto'.
+
+[7m197[0m         
+...(dto.serial !== 
+undefined && { serial: 
+dto.serial }),
+[7m   [0m [91m          
+                           
+                 ~~~~~~[0m
+[96msrc/equipment/equipmen
+t.service.ts[0m:[93m198[
+0m:[93m17[0m - 
+[91merror[0m[90m 
+TS2339: [0mProperty 
+'status' does not exist on 
+type 'UpdateEquipmentDto'.
+
+[7m198[0m         
+...(dto.status && { 
+status: dto.status }),
+[7m   [0m [91m          
+      ~~~~~~[0m
+[96msrc/equipment/equipmen
+t.service.ts[0m:[93m198[
+0m:[93m41[0m - 
+[91merror[0m[90m 
+TS2339: [0mProperty 
+'status' does not exist on 
+type 'UpdateEquipmentDto'.
+
+[7m198[0m         
+...(dto.status && { 
+status: dto.status }),
+[7m   [0m [91m          
+                           
+   ~~~~~~[0m
+[96msrc/equipment/equipmen
+t.service.ts[0m:[93m199[
+0m:[93m17[0m - 
+[91merror[0m[90m 
+TS2339: [0mProperty 
+'officeId' does not exist 
+on type 
+'UpdateEquipmentDto'.
+
+[7m199[0m         
+...(dto.officeId !== 
+undefined && { officeId: 
+dto.officeId }),
+[7m   [0m [91m          
+      ~~~~~~~~[0m
+[96msrc/equipment/equipmen
+t.service.ts[0m:[93m199[
+0m:[93m59[0m - 
+[91merror[0m[90m 
+TS2339: [0mProperty 
+'officeId' does not exist 
+on type 
+'UpdateEquipmentDto'.
+
+[7m199[0m         
+...(dto.officeId !== 
+undefined && { officeId: 
+dto.officeId }),
+[7m   [0m [91m          
+                           
+                     
+~~~~~~~~[0m
+[96msrc/equipment/equipmen
+t.service.ts[0m:[93m200[
+0m:[93m17[0m - 
+[91merror[0m[90m 
+TS2339: [0mProperty 
+'specs' does not exist on 
+type 'UpdateEquipmentDto'.
+
+[7m200[0m         
+...(dto.specs !== 
+undefined && { specs: 
+dto.specs }),
+[7m   [0m [91m          
+      ~~~~~[0m
+[96msrc/equipment/equipmen
+t.service.ts[0m:[93m200[
+0m:[93m53[0m - 
+[91merror[0m[90m 
+TS2339: [0mProperty 
+'specs' does not exist on 
+type 'UpdateEquipmentDto'.
+
+[7m200[0m         
+...(dto.specs !== 
+undefined && { specs: 
+dto.specs }),
+[7m   [0m [91m          
+                           
+               ~~~~~[0m
+[96msrc/equipment/equipmen
+t.service.ts[0m:[93m201[
+0m:[93m17[0m - 
+[91merror[0m[90m 
+TS2339: [0mProperty 
+'notes' does not exist on 
+type 'UpdateEquipmentDto'.
+
+[7m201[0m         
+...(dto.notes !== 
+undefined && { notes: 
+dto.notes }),
+[7m   [0m [91m          
+      ~~~~~[0m
+[96msrc/equipment/equipmen
+t.service.ts[0m:[93m201[
+0m:[93m53[0m - 
+[91merror[0m[90m 
+TS2339: [0mProperty 
+'notes' does not exist on 
+type 'UpdateEquipmentDto'.
+
+[7m201[0m         
+...(dto.notes !== 
+undefined && { notes: 
+dto.notes }),
+[7m   [0m [91m          
+                           
+               ~~~~~[0m
+[96msrc/equipment/equipmen
+t.service.ts[0m:[93m202[
+0m:[93m17[0m - 
+[91merror[0m[90m 
+TS2339: [0mProperty 
+'acquiredAt' does not 
+exist on type 
+'UpdateEquipmentDto'.
+
+[7m202[0m         
+...(dto.acquiredAt && { 
+acquiredAt: new 
+Date(dto.acquiredAt) }),
+[7m   [0m [91m          
+      ~~~~~~~~~~[0m
+[96msrc/equipment/equipmen
+t.service.ts[0m:[93m202[
+0m:[93m58[0m - 
+[91merror[0m[90m 
+TS2339: [0mProperty 
+'acquiredAt' does not 
+exist on type 
+'UpdateEquipmentDto'.
+
+[7m202[0m         
+...(dto.acquiredAt && { 
+acquiredAt: new 
+Date(dto.acquiredAt) }),
+[7m   [0m [91m          
+                           
+                    
+~~~~~~~~~~[0m
+[96msrc/equipment/equipmen
+t.service.ts[0m:[93m209[
+0m:[93m25[0m - 
+[91merror[0m[90m 
+TS2339: [0mProperty 
+'equipmentHistory' does 
+not exist on type 
+'PrismaService'.
+
+[7m209[0m       await thi
+s.prisma.equipmentHistory.c
+reate({
+[7m   [0m [91m          
+              
+~~~~~~~~~~~~~~~~[0m
+[96msrc/equipment/equipmen
+t.service.ts[0m:[93m225[
+0m:[93m24[0m - 
+[91merror[0m[90m 
+TS2339: [0mProperty 
+'equipment' does not exist 
+on type 'PrismaService'.
+
+[7m225[0m     return this
+.prisma.equipment.delete({ 
+where: { id } });
+[7m   [0m [91m          
+             ~~~~~~~~~[0m
+[96msrc/equipment/equipmen
+t.service.ts[0m:[93m229[
+0m:[93m36[0m - 
+[91merror[0m[90m 
+TS2339: [0mProperty 
+'equipment' does not exist 
+on type 'PrismaService'.
+
+[7m229[0m     const last 
+= await this.prisma.equipme
+nt.findFirst({
+[7m   [0m [91m          
+                         
+~~~~~~~~~[0m
+[96msrc/equipment/history/
+history.dto.ts[0m:[93m2[
+0m:[93m10[0m - 
+[91merror[0m[90m 
+TS2305: [0mModule 
+'"@prisma/client"' has no 
+exported member 
+'HistoryAction'.
+
+[7m2[0m import { 
+HistoryAction } from 
+'@prisma/client';
+[7m [0m [91m         
+~~~~~~~~~~~~~[0m
+[96msrc/equipment/history/
+history.service.ts[0m:[93
+m10[0m:[93m34[0m - 
+[91merror[0m[90m 
+TS2339: [0mProperty 
+'equipment' does not exist 
+on type 'PrismaService'.
+Found 95 error(s).
+
+
+[7m10[0m     const eq = 
+await this.prisma.equipment
+.findUnique({ where: { id: 
+equipmentId } });
+[7m  [0m [91m           
+                      
+~~~~~~~~~[0m
+[96msrc/equipment/history/
+history.service.ts[0m:[93
+m13[0m:[93m24[0m - 
+[91merror[0m[90m 
+TS2339: [0mProperty 
+'equipmentHistory' does 
+not exist on type 
+'PrismaService'.
+
+[7m13[0m     return this.
+prisma.equipmentHistory.fin
+dMany({
+[7m  [0m [91m           
+            
+~~~~~~~~~~~~~~~~[0m
+[96msrc/equipment/history/
+history.service.ts[0m:[93
+m25[0m:[93m34[0m - 
+[91merror[0m[90m 
+TS2339: [0mProperty 
+'equipment' does not exist 
+on type 'PrismaService'.
+
+[7m25[0m     const eq = 
+await this.prisma.equipment
+.findUnique({ where: { id: 
+equipmentId } });
+[7m  [0m [91m           
+                      
+~~~~~~~~~[0m
+[96msrc/equipment/history/
+history.service.ts[0m:[93
+m28[0m:[93m24[0m - 
+[91merror[0m[90m 
+TS2339: [0mProperty 
+'equipmentHistory' does 
+not exist on type 
+'PrismaService'.
+
+[7m28[0m     return this.
+prisma.equipmentHistory.cre
+ate({
+[7m  [0m [91m           
+            
+~~~~~~~~~~~~~~~~[0m
+[96msrc/prisma/prisma.serv
+ice.ts[0m:[93m2[0m:[93m
+10[0m - 
+[91merror[0m[90m 
+TS2305: [0mModule 
+'"@prisma/client"' has no 
+exported member 
+'PrismaClient'.
+
+[7m2[0m import { 
+PrismaClient } from 
+'@prisma/client';
+[7m [0m [91m         
+~~~~~~~~~~~~[0m
+[96msrc/prisma/prisma.serv
+ice.ts[0m:[93m17[0m:[93
+m16[0m - 
+[91merror[0m[90m 
+TS2339: [0mProperty 
+'$connect' does not exist 
+on type 'PrismaService'.
+
+[7m17[0m     await 
+this.$connect();
+[7m  [0m [91m           
+    ~~~~~~~~[0m
+[96msrc/prisma/prisma.serv
+ice.ts[0m:[93m21[0m:[93
+m16[0m - 
+[91merror[0m[90m 
+TS2339: [0mProperty 
+'$disconnect' does not 
+exist on type 
+'PrismaService'.
+
+[7m21[0m     await 
+this.$disconnect();
+[7m  [0m [91m           
+    ~~~~~~~~~~~[0m
+[96msrc/user/user.dto.ts[
+0m:[93m2[0m:[93m10[0m 
+- [91merror[0m[90m 
+TS2305: [0mModule 
+'"@prisma/client"' has no 
+exported member 'Role'.
+
+[7m2[0m import { Role } 
+from '@prisma/client';
+[7m [0m [91m         
+~~~~[0m
+[96msrc/user/user.dto.ts[
+0m:[93m3[0m:[93m29[0m 
+- [91merror[0m[90m 
+TS2307: [0mCannot find 
+module 
+'@nestjs/mapped-types' or 
+its corresponding type 
+declarations.
+
+[7m3[0m import { 
+PartialType } from 
+'@nestjs/mapped-types';
+[7m [0m [91m            
+                
+~~~~~~~~~~~~~~~~~~~~~~[0m
+[96msrc/user/user.service.
+ts[0m:[93m11[0m:[93m24
+[0m - [91merror[0m[90m 
+TS2339: [0mProperty 
+'user' does not exist on 
+type 'PrismaService'.
+
+[7m11[0m     return 
+this.prisma.user.findMany({
+[7m  [0m [91m           
+            ~~~~[0m
+[96msrc/user/user.service.
+ts[0m:[93m26[0m:[93m36
+[0m - [91merror[0m[90m 
+TS2339: [0mProperty 
+'user' does not exist on 
+type 'PrismaService'.
+
+[7m26[0m     const user 
+= await this.prisma.user.fi
+ndUnique({
+[7m  [0m [91m           
+                        
+~~~~[0m
+[96msrc/user/user.service.
+ts[0m:[93m43[0m:[93m38
+[0m - [91merror[0m[90m 
+TS2339: [0mProperty 
+'user' does not exist on 
+type 'PrismaService'.
+
+[7m43[0m     const 
+exists = await this.prisma.
+user.findUnique({ where: { 
+username: dto.username } 
+});
+[7m  [0m [91m           
+                          
+~~~~[0m
+[96msrc/user/user.service.
+ts[0m:[93m47[0m:[93m24
+[0m - [91merror[0m[90m 
+TS2339: [0mProperty 
+'user' does not exist on 
+type 'PrismaService'.
+
+[7m47[0m     return 
+this.prisma.user.create({
+[7m  [0m [91m           
+            ~~~~[0m
+[96msrc/user/user.service.
+ts[0m:[93m63[0m:[93m13
+[0m - [91merror[0m[90m 
+TS2339: [0mProperty 
+'password' does not exist 
+on type 'UpdateUserDto'.
+
+[7m63[0m     if 
+(dto.password) {
+[7m  [0m [91m           
+ ~~~~~~~~[0m
+[96msrc/user/user.service.
+ts[0m:[93m64[0m:[93m44
+[0m - [91merror[0m[90m 
+TS2339: [0mProperty 
+'password' does not exist 
+on type 'UpdateUserDto'.
+
+[7m64[0m       
+passwordHash = await 
+bcrypt.hash(dto.password, 
+10);
+[7m  [0m [91m           
+                           
+     ~~~~~~~~[0m
+[96msrc/user/user.service.
+ts[0m:[93m67[0m:[93m24
+[0m - [91merror[0m[90m 
+TS2339: [0mProperty 
+'user' does not exist on 
+type 'PrismaService'.
+
+[7m67[0m     return 
+this.prisma.user.update({
+[7m  [0m [91m           
+            ~~~~[0m
+[96msrc/user/user.service.
+ts[0m:[93m70[0m:[93m17
+[0m - [91merror[0m[90m 
+TS2339: [0mProperty 
+'fullName' does not exist 
+on type 'UpdateUserDto'.
+
+[7m70[0m         
+...(dto.fullName && { 
+fullName: dto.fullName }),
+[7m  [0m [91m           
+     ~~~~~~~~[0m
+[96msrc/user/user.service.
+ts[0m:[93m70[0m:[93m45
+[0m - [91merror[0m[90m 
+TS2339: [0mProperty 
+'fullName' does not exist 
+on type 'UpdateUserDto'.
+
+[7m70[0m         
+...(dto.fullName && { 
+fullName: dto.fullName }),
+[7m  [0m [91m           
+                           
+      ~~~~~~~~[0m
+[96msrc/user/user.service.
+ts[0m:[93m71[0m:[93m17
+[0m - [91merror[0m[90m 
+TS2339: [0mProperty 
+'email' does not exist on 
+type 'UpdateUserDto'.
+
+[7m71[0m         
+...(dto.email !== 
+undefined && { email: 
+dto.email }),
+[7m  [0m [91m           
+     ~~~~~[0m
+[96msrc/user/user.service.
+ts[0m:[93m71[0m:[93m53
+[0m - [91merror[0m[90m 
+TS2339: [0mProperty 
+'email' does not exist on 
+type 'UpdateUserDto'.
+
+[7m71[0m         
+...(dto.email !== 
+undefined && { email: 
+dto.email }),
+[7m  [0m [91m           
+                           
+              ~~~~~[0m
+[96msrc/user/user.service.
+ts[0m:[93m72[0m:[93m17
+[0m - [91merror[0m[90m 
+TS2339: [0mProperty 
+'role' does not exist on 
+type 'UpdateUserDto'.
+
+[7m72[0m         
+...(dto.role && { role: 
+dto.role }),
+[7m  [0m [91m           
+     ~~~~[0m
+[96msrc/user/user.service.
+ts[0m:[93m72[0m:[93m37
+[0m - [91merror[0m[90m 
+TS2339: [0mProperty 
+'role' does not exist on 
+type 'UpdateUserDto'.
+
+[7m72[0m         
+...(dto.role && { role: 
+dto.role }),
+[7m  [0m [91m           
+                         
+~~~~[0m
+[96msrc/user/user.service.
+ts[0m:[93m83[0m:[93m24
+[0m - [91merror[0m[90m 
+TS2339: [0mProperty 
+'user' does not exist on 
+type 'PrismaService'.
+
+[7m83[0m     return 
+this.prisma.user.delete({ 
+where: { id } });
+[7m  [0m [91m           
+            ~~~~[0m
+
