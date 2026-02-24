@@ -8,7 +8,9 @@ Seguit 2.0 es una plataforma web moderna diseñada para el seguimiento y gestió
 - **Gestión de Equipos**: Listado avanzado con filtros dinámicos por tipo, estado y ubicación jerárquica.
 - **Historial Detallado**: Registro automático y manual de cada acción realizada sobre el equipamiento.
 - **Ubicaciones Dinámicas**: Estructura de Ciudades -> Secciones -> Oficinas totalmente configurable.
-- **Seguridad**: Autenticación basada en JWT con roles de Administrador (Root) y Técnico.
+- **Plantillas de Modelos**: Sistema de plantillas que auto-completan especificaciones técnicas para agilizar el registro de equipos.
+- **Administración de Usuarios**: Panel especializado para gestionar técnicos, sus roles y estados (Activo/Inactivo).
+- **Seguridad**: Autenticación basada en JWT con roles de Administrador (Root) y Técnico, controlando el acceso a áreas críticas.
 
 ## 🛠️ Tecnologías
 
