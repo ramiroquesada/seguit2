@@ -15,8 +15,8 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, toggleSidebar }) => {
   const navItems = [
     { path: '/dashboard', label: 'Dashboard', icon: <LayoutDashboard size={20} /> },
     { path: '/equipment', label: 'Equipos', icon: <MonitorIcon size={20} /> },
+    { path: '/settings', label: 'Configuración', icon: <Settings size={20} /> },
     ...(isRoot ? [
-      { path: '/settings', label: 'Configuración', icon: <Settings size={20} /> },
       { path: '/users', label: 'Usuarios', icon: <Users size={20} /> },
     ] : [])
   ];
@@ -29,7 +29,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, toggleSidebar }) => {
           {isCollapsed && <span className="logo-text-short">S2</span>}
         </div>
       </div>
-      
+
       <div className="sidebar-nav">
         {navItems.map((item) => (
           <NavLink

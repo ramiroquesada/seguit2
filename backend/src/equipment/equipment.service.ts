@@ -16,6 +16,16 @@ const EQUIPMENT_SELECT = {
   acquiredAt: true,
   createdAt: true,
   updatedAt: true,
+  equipmentModel: {
+    select: {
+      id: true,
+      name: true,
+      type: true,
+      brand: true,
+      modelName: true,
+      specs: true,
+    },
+  },
   office: {
     select: {
       id: true,
@@ -33,7 +43,7 @@ const EQUIPMENT_SELECT = {
 
 @Injectable()
 export class EquipmentService {
-  constructor(private prisma: PrismaService) {}
+  constructor(private prisma: PrismaService) { }
 
   async findAll(q: QueryEquipmentDto) {
     const page = q.page ?? 1;
@@ -147,10 +157,11 @@ export class EquipmentService {
         serial: dto.serial,
         status: dto.status ?? EquipmentStatus.ACTIVE,
         officeId: dto.officeId,
+        modelId: dto.modelId,
         specs: dto.specs ?? {},
         notes: dto.notes,
         acquiredAt: dto.acquiredAt ? new Date(dto.acquiredAt) : undefined,
-      },
+      } as any,
       select: EQUIPMENT_SELECT,
     });
 
@@ -197,10 +208,11 @@ export class EquipmentService {
         ...(dto.serial !== undefined && { serial: dto.serial }),
         ...(dto.status && { status: dto.status }),
         ...(dto.officeId !== undefined && { officeId: dto.officeId }),
+        ...(dto.modelId !== undefined && { modelId: dto.modelId }),
         ...(dto.specs !== undefined && { specs: dto.specs }),
         ...(dto.notes !== undefined && { notes: dto.notes }),
         ...(dto.acquiredAt && { acquiredAt: new Date(dto.acquiredAt) }),
-      },
+      } as any,
       select: EQUIPMENT_SELECT,
     });
 

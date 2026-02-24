@@ -2,13 +2,25 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
 
+// import * as morgan from 'morgan';
+
+
+const morgan = require('morgan');
+
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   app.enableCors({
-    origin: ['http://localhost:5173', 'http://localhost:3000'],
+    origin: (origin, callback) => {
+      // Allow any origin for development/local network access
+      callback(null, true);
+    },
     credentials: true,
   });
+
+
+  app.use(morgan('dev'));
+
 
   app.useGlobalPipes(
     new ValidationPipe({
@@ -19,7 +31,7 @@ async function bootstrap() {
   );
 
   const port = process.env.PORT ?? 3000;
-  await app.listen(port);
+  await app.listen(port, '0.0.0.0');
   console.log(`🚀 Seguit 2.0 API running on http://localhost:${port}`);
 }
 bootstrap();

@@ -86,6 +86,10 @@ model Equipment {
   status      EquipmentStatus @default(ACTIVE)
   officeId    Int?
   office      Office?         @relation(fields: [officeId], references: [id])
+  
+  modelId     Int?
+  equipmentModel EquipmentModel? @relation(fields: [modelId], references: [id])
+
   specs       Json
   notes       String?
   acquiredAt  DateTime?
@@ -93,6 +97,19 @@ model Equipment {
   updatedAt   DateTime        @updatedAt
 
   history EquipmentHistory[]
+}
+
+model EquipmentModel {
+  id        Int           @id @default(autoincrement())
+  name      String        @unique
+  type      EquipmentType
+  brand     String
+  modelName String
+  specs     Json
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+
+  equipment Equipment[]
 }
 
 model EquipmentHistory {

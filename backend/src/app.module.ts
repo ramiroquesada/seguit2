@@ -5,6 +5,7 @@ import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
 import { ConfigLocationsModule } from './config-locations/config-locations.module';
 import { EquipmentModule } from './equipment/equipment.module';
+import { EquipmentModelModule } from './equipment-model/equipment-model.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { EquipmentModule } from './equipment/equipment.module';
     UserModule,
     ConfigLocationsModule,
     EquipmentModule,
+    EquipmentModelModule,
   ],
 })
-export class AppModule {}
+export class AppModule { }

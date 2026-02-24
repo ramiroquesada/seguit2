@@ -8,24 +8,24 @@ import { CreateCityDto, CreateSectionDto, CreateOfficeDto, UpdateNameDto } from 
 @Controller('config')
 @UseGuards(AuthGuard('jwt'))
 export class ConfigLocationsController {
-  constructor(private svc: ConfigLocationsService) {}
+  constructor(private svc: ConfigLocationsService) { }
 
   // ── Cities
   @Get('cities')
   getCities() { return this.svc.getCities(); }
 
   @Post('cities')
-  @UseGuards(RolesGuard) @Roles('ROOT')
+  @UseGuards(RolesGuard) @Roles('ROOT', 'TECHNICIAN')
   createCity(@Body() dto: CreateCityDto) { return this.svc.createCity(dto); }
 
   @Patch('cities/:id')
-  @UseGuards(RolesGuard) @Roles('ROOT')
+  @UseGuards(RolesGuard) @Roles('ROOT', 'TECHNICIAN')
   updateCity(@Param('id', ParseIntPipe) id: number, @Body() dto: UpdateNameDto) {
     return this.svc.updateCity(id, dto.name!);
   }
 
   @Delete('cities/:id')
-  @UseGuards(RolesGuard) @Roles('ROOT')
+  @UseGuards(RolesGuard) @Roles('ROOT', 'TECHNICIAN')
   deleteCity(@Param('id', ParseIntPipe) id: number) { return this.svc.deleteCity(id); }
 
   // ── Sections
@@ -35,17 +35,17 @@ export class ConfigLocationsController {
   }
 
   @Post('sections')
-  @UseGuards(RolesGuard) @Roles('ROOT')
+  @UseGuards(RolesGuard) @Roles('ROOT', 'TECHNICIAN')
   createSection(@Body() dto: CreateSectionDto) { return this.svc.createSection(dto); }
 
   @Patch('sections/:id')
-  @UseGuards(RolesGuard) @Roles('ROOT')
+  @UseGuards(RolesGuard) @Roles('ROOT', 'TECHNICIAN')
   updateSection(@Param('id', ParseIntPipe) id: number, @Body() dto: UpdateNameDto) {
     return this.svc.updateSection(id, dto.name!);
   }
 
   @Delete('sections/:id')
-  @UseGuards(RolesGuard) @Roles('ROOT')
+  @UseGuards(RolesGuard) @Roles('ROOT', 'TECHNICIAN')
   deleteSection(@Param('id', ParseIntPipe) id: number) { return this.svc.deleteSection(id); }
 
   // ── Offices
@@ -55,16 +55,16 @@ export class ConfigLocationsController {
   }
 
   @Post('offices')
-  @UseGuards(RolesGuard) @Roles('ROOT')
+  @UseGuards(RolesGuard) @Roles('ROOT', 'TECHNICIAN')
   createOffice(@Body() dto: CreateOfficeDto) { return this.svc.createOffice(dto); }
 
   @Patch('offices/:id')
-  @UseGuards(RolesGuard) @Roles('ROOT')
+  @UseGuards(RolesGuard) @Roles('ROOT', 'TECHNICIAN')
   updateOffice(@Param('id', ParseIntPipe) id: number, @Body() dto: UpdateNameDto) {
     return this.svc.updateOffice(id, dto.name!);
   }
 
   @Delete('offices/:id')
-  @UseGuards(RolesGuard) @Roles('ROOT')
+  @UseGuards(RolesGuard) @Roles('ROOT', 'TECHNICIAN')
   deleteOffice(@Param('id', ParseIntPipe) id: number) { return this.svc.deleteOffice(id); }
 }

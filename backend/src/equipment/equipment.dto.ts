@@ -28,6 +28,10 @@ export class CreateEquipmentDto {
   @IsOptional()
   officeId?: number;
 
+  @IsInt()
+  @IsOptional()
+  modelId?: number;
+
   @IsObject()
   @IsOptional()
   specs?: Record<string, any>;
@@ -41,7 +45,7 @@ export class CreateEquipmentDto {
   acquiredAt?: string;
 }
 
-export class UpdateEquipmentDto extends PartialType(CreateEquipmentDto) {}
+export class UpdateEquipmentDto extends PartialType(CreateEquipmentDto) { }
 
 export class QueryEquipmentDto {
   @IsString()

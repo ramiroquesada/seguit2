@@ -28,7 +28,7 @@ function App() {
         <BrowserRouter>
           <Routes>
             <Route path="/login" element={<LoginPage />} />
-            
+
             {/* Protected routes */}
             <Route element={<PrivateRoute />}>
               <Route element={<Layout />}>
@@ -38,10 +38,10 @@ function App() {
                 <Route path="/equipment/new" element={<EquipmentFormPage />} />
                 <Route path="/equipment/:id" element={<EquipmentDetailPage />} />
                 <Route path="/equipment/:id/edit" element={<EquipmentFormPage />} />
-                
+                <Route path="/settings" element={<SettingsPage />} />
+
                 {/* Admin only routes */}
                 <Route element={<PrivateRoute allowedRoles={['ROOT']} />}>
-                  <Route path="/settings" element={<SettingsPage />} />
                   <Route path="/users" element={<UsersPage />} />
                 </Route>
               </Route>
