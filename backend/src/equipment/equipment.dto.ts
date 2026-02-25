@@ -1,14 +1,14 @@
 import { IsString, IsInt, IsOptional, IsEnum, IsDateString, IsObject } from 'class-validator';
-import { EquipmentType, EquipmentStatus } from '@prisma/client';
+import { EquipmentStatus } from '@prisma/client';
 import { PartialType } from '@nestjs/mapped-types';
 import { Type } from 'class-transformer';
 
 export class CreateEquipmentDto {
   @IsInt()
-  id: number;
+  number: number;
 
-  @IsEnum(EquipmentType)
-  type: EquipmentType;
+  @IsInt()
+  categoryId: number;
 
   @IsString()
   brand: string;
@@ -56,9 +56,10 @@ export class QueryEquipmentDto {
   @IsOptional()
   search?: string;
 
-  @IsEnum(EquipmentType)
+  @IsInt()
   @IsOptional()
-  type?: EquipmentType;
+  @Type(() => Number)
+  categoryId?: number;
 
   @IsEnum(EquipmentStatus)
   @IsOptional()
@@ -78,7 +79,7 @@ export class QueryEquipmentDto {
 
   @IsString()
   @IsOptional()
-  sortBy?: string;
+  sortBy?: string = 'number';
 
   @IsString()
   @IsOptional()

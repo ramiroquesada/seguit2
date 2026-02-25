@@ -3,7 +3,7 @@ import { AuthGuard } from '@nestjs/passport';
 import { RolesGuard } from '../auth/roles.guard';
 import { Roles } from '../auth/roles.decorator';
 import { ConfigLocationsService } from './config-locations.service';
-import { CreateCityDto, CreateSectionDto, CreateOfficeDto, UpdateNameDto } from './config-locations.dto';
+import { CreateCityDto, CreateSectionDto, CreateOfficeDto, UpdateCityDto, UpdateSectionDto, UpdateOfficeDto, MergeOfficesDto } from './config-locations.dto';
 
 @Controller('config')
 @UseGuards(AuthGuard('jwt'))
@@ -20,8 +20,8 @@ export class ConfigLocationsController {
 
   @Patch('cities/:id')
   @UseGuards(RolesGuard) @Roles('ROOT', 'TECHNICIAN')
-  updateCity(@Param('id', ParseIntPipe) id: number, @Body() dto: UpdateNameDto) {
-    return this.svc.updateCity(id, dto.name!);
+  updateCity(@Param('id', ParseIntPipe) id: number, @Body() dto: UpdateCityDto) {
+    return this.svc.updateCity(id, dto.name);
   }
 
   @Delete('cities/:id')
@@ -40,8 +40,8 @@ export class ConfigLocationsController {
 
   @Patch('sections/:id')
   @UseGuards(RolesGuard) @Roles('ROOT', 'TECHNICIAN')
-  updateSection(@Param('id', ParseIntPipe) id: number, @Body() dto: UpdateNameDto) {
-    return this.svc.updateSection(id, dto.name!);
+  updateSection(@Param('id', ParseIntPipe) id: number, @Body() dto: UpdateSectionDto) {
+    return this.svc.updateSection(id, dto.name, dto.cityId);
   }
 
   @Delete('sections/:id')
@@ -60,11 +60,17 @@ export class ConfigLocationsController {
 
   @Patch('offices/:id')
   @UseGuards(RolesGuard) @Roles('ROOT', 'TECHNICIAN')
-  updateOffice(@Param('id', ParseIntPipe) id: number, @Body() dto: UpdateNameDto) {
-    return this.svc.updateOffice(id, dto.name!);
+  updateOffice(@Param('id', ParseIntPipe) id: number, @Body() dto: UpdateOfficeDto) {
+    return this.svc.updateOffice(id, dto.name, dto.sectionId);
   }
 
   @Delete('offices/:id')
   @UseGuards(RolesGuard) @Roles('ROOT', 'TECHNICIAN')
   deleteOffice(@Param('id', ParseIntPipe) id: number) { return this.svc.deleteOffice(id); }
+
+  @Post('offices/merge')
+  @UseGuards(RolesGuard) @Roles('ROOT', 'TECHNICIAN')
+  mergeOffices(@Body() dto: MergeOfficesDto) {
+    return this.svc.mergeOffices(dto.targetId, dto.sourceIds);
+  }
 }

@@ -28,8 +28,8 @@ export const locationsApi = {
     const response = await api.post('/config/sections', { cityId, name });
     return response.data;
   },
-  updateSection: async (id: number, name: string) => {
-    const response = await api.patch(`/config/sections/${id}`, { name });
+  updateSection: async (id: number, name?: string, cityId?: number) => {
+    const response = await api.patch(`/config/sections/${id}`, { name, cityId });
     return response.data;
   },
   deleteSection: async (id: number) => {
@@ -46,12 +46,16 @@ export const locationsApi = {
     const response = await api.post('/config/offices', { sectionId, name });
     return response.data;
   },
-  updateOffice: async (id: number, name: string) => {
-    const response = await api.patch(`/config/offices/${id}`, { name });
+  updateOffice: async (id: number, name?: string, sectionId?: number) => {
+    const response = await api.patch(`/config/offices/${id}`, { name, sectionId });
     return response.data;
   },
   deleteOffice: async (id: number) => {
     const response = await api.delete(`/config/offices/${id}`);
+    return response.data;
+  },
+  mergeOffices: async (targetId: number, sourceIds: number[]) => {
+    const response = await api.post('/config/offices/merge', { targetId, sourceIds });
     return response.data;
   },
 };

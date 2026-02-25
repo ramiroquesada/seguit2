@@ -4,6 +4,7 @@ import { Save, ArrowLeft, Plus, Trash2, ClipboardList } from 'lucide-react';
 import { equipmentApi } from '../../api/equipment.api';
 import { locationsApi } from '../../api/locations.api';
 import { equipmentModelsApi } from '../../api/equipment-models.api';
+import { categoriesApi } from '../../api/categories.api';
 import type { EquipmentModel } from '../../api/equipment-models.api';
 
 export const EquipmentFormPage: React.FC = () => {
@@ -13,7 +14,7 @@ export const EquipmentFormPage: React.FC = () => {
   const [loading, setLoading] = useState(false);
 
   const [formData, setFormData] = useState({
-    id: '', type: 'PC', brand: '', model: '', serial: '', status: 'ACTIVE', notes: '',
+    id: '', categoryId: '' as string | number, brand: '', model: '', serial: '', status: 'ACTIVE', notes: '',
     cityId: '', sectionId: '', officeId: '',
     modelId: '' as string | number,
     specs: [] as { key: string; value: string }[],
@@ -23,10 +24,12 @@ export const EquipmentFormPage: React.FC = () => {
   const [sections, setSections] = useState<any[]>([]);
   const [offices, setOffices] = useState<any[]>([]);
   const [models, setModels] = useState<EquipmentModel[]>([]);
+  const [categories, setCategories] = useState<any[]>([]);
 
   useEffect(() => {
     locationsApi.getCities().then(setCities);
     equipmentModelsApi.getAll().then(setModels);
+    categoriesApi.getAll().then(setCategories);
 
     if (isEditing) {
       equipmentApi.getOne(Number(id)).then(async (eq: any) => {
@@ -45,7 +48,7 @@ export const EquipmentFormPage: React.FC = () => {
         }
 
         setFormData({
-          id: String(eq.id), type: eq.type, brand: eq.brand || '', model: eq.model || '',
+          id: String(eq.id), categoryId: eq.categoryId || '', brand: eq.brand || '', model: eq.model || '',
           serial: eq.serial || '', status: eq.status, notes: eq.notes || '',
           cityId: String(cityId), sectionId: String(sectionId), officeId: String(officeId),
           modelId: eq.equipmentModel?.id || '',
@@ -89,7 +92,7 @@ export const EquipmentFormPage: React.FC = () => {
         modelId: model.id,
         brand: model.brand,
         model: model.modelName,
-        type: model.type as any,
+        categoryId: model.categoryId,
         specs,
       });
     }
@@ -167,16 +170,10 @@ export const EquipmentFormPage: React.FC = () => {
 
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
               <div className="form-group">
-                <label className="form-label">Tipo</label>
-                <select className="form-control" value={formData.type} onChange={e => setFormData({ ...formData, type: e.target.value })}>
-                  <option value="PC">PC</option>
-                  <option value="LAPTOP">Laptop</option>
-                  <option value="PRINTER">Impresora</option>
-                  <option value="MONITOR">Monitor</option>
-                  <option value="MODEM">Modem</option>
-                  <option value="ROUTER">Router</option>
-                  <option value="ANTENNA">Antena</option>
-                  <option value="OTHERS">Otros</option>
+                <label className="form-label">Categoría</label>
+                <select className="form-control" value={formData.categoryId} onChange={e => setFormData({ ...formData, categoryId: e.target.value })} required>
+                  <option value="">Seleccionar categoría...</option>
+                  {categories.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
                 </select>
               </div>
               <div className="form-group">

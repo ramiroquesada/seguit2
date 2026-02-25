@@ -1,42 +1,43 @@
 import React, { useState, useEffect } from 'react';
+import { useQuery } from '@tanstack/react-query';
 import { X, Plus, Trash2 } from 'lucide-react';
+import { categoriesApi } from '../../api/categories.api';
 import type { EquipmentModel } from '../../api/equipment-models.api';
 
-interface EquipmentModelModalProps {
-    model?: EquipmentModel | null;
+interface Props {
     isOpen: boolean;
+    model?: EquipmentModel | null;
     onClose: () => void;
     onSave: (data: any) => Promise<void>;
 }
 
-export const EquipmentModelModal: React.FC<EquipmentModelModalProps> = ({ model, isOpen, onClose, onSave }) => {
-    const [formData, setFormData] = useState({
-        name: '',
-        type: 'PC',
-        brand: '',
-        modelName: '',
-        specs: [] as { key: string; value: string }[],
-    });
+export const EquipmentModelModal: React.FC<Props> = ({ isOpen, model, onClose, onSave }) => {
+    const [name, setName] = useState('');
+    const [categoryId, setCategoryId] = useState<number | ''>('');
+    const [brand, setBrand] = useState('');
+    const [modelName, setModelName] = useState('');
+    const [specs, setSpecs] = useState<{ key: string; value: string }[]>([]);
     const [loading, setLoading] = useState(false);
+
+    const { data: categories = [] } = useQuery({
+        queryKey: ['categories'],
+        queryFn: categoriesApi.getAll,
+        enabled: isOpen,
+    });
 
     useEffect(() => {
         if (model) {
-            const specs = Object.entries(model.specs || {}).map(([key, value]) => ({ key, value: String(value) }));
-            setFormData({
-                name: model.name,
-                type: model.type,
-                brand: model.brand,
-                modelName: model.modelName,
-                specs,
-            });
+            setName(model.name);
+            setCategoryId(model.categoryId);
+            setBrand(model.brand);
+            setModelName(model.modelName);
+            setSpecs(Object.entries(model.specs || {}).map(([key, value]) => ({ key, value: String(value) })));
         } else {
-            setFormData({
-                name: '',
-                type: 'PC',
-                brand: '',
-                modelName: '',
-                specs: [],
-            });
+            setName('');
+            setCategoryId('');
+            setBrand('');
+            setModelName('');
+            setSpecs([]);
         }
     }, [model, isOpen]);
 
@@ -44,15 +45,19 @@ export const EquipmentModelModal: React.FC<EquipmentModelModalProps> = ({ model,
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+        if (!name || !categoryId || !brand || !modelName) return;
+
         setLoading(true);
         try {
-            const specsObj = formData.specs.reduce((acc, curr) => {
-                if (curr.key.trim()) acc[curr.key.trim()] = curr.value;
-                return acc;
-            }, {} as any);
+            const specsObj = Object.fromEntries(
+                specs.filter(s => s.key.trim()).map(s => [s.key.trim(), s.value])
+            );
 
             await onSave({
-                ...formData,
+                name,
+                categoryId: +categoryId,
+                brand,
+                modelName,
                 specs: specsObj,
             });
             onClose();
@@ -64,12 +69,12 @@ export const EquipmentModelModal: React.FC<EquipmentModelModalProps> = ({ model,
         }
     };
 
-    const addSpec = () => setFormData({ ...formData, specs: [...formData.specs, { key: '', value: '' }] });
-    const removeSpec = (index: number) => setFormData({ ...formData, specs: formData.specs.filter((_, i) => i !== index) });
+    const addSpec = () => setSpecs([...specs, { key: '', value: '' }]);
+    const removeSpec = (index: number) => setSpecs(specs.filter((_, i) => i !== index));
     const updateSpec = (index: number, field: 'key' | 'value', val: string) => {
-        const newSpecs = [...formData.specs];
+        const newSpecs = [...specs];
         newSpecs[index][field] = val;
-        setFormData({ ...formData, specs: newSpecs });
+        setSpecs(newSpecs);
     };
 
     return (
@@ -84,35 +89,32 @@ export const EquipmentModelModal: React.FC<EquipmentModelModalProps> = ({ model,
                         <label className="form-label">Nombre de la Plantilla (Ej: Impresora Administrativa)</label>
                         <input
                             className="form-control"
-                            value={formData.name}
-                            onChange={e => setFormData({ ...formData, name: e.target.value })}
+                            value={name}
+                            onChange={e => setName(e.target.value)}
                             required
                         />
                     </div>
                     <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
                         <div className="form-group">
-                            <label className="form-label">Tipo</label>
+                            <label className="form-label">Categoría</label>
                             <select
                                 className="form-control"
-                                value={formData.type}
-                                onChange={e => setFormData({ ...formData, type: e.target.value })}
+                                value={categoryId}
+                                onChange={e => setCategoryId(+e.target.value)}
+                                required
                             >
-                                <option value="PC">PC</option>
-                                <option value="LAPTOP">Laptop</option>
-                                <option value="PRINTER">Impresora</option>
-                                <option value="MONITOR">Monitor</option>
-                                <option value="MODEM">Modem</option>
-                                <option value="ROUTER">Router</option>
-                                <option value="ANTENNA">Antena</option>
-                                <option value="OTHERS">Otros</option>
+                                <option value="">Seleccionar categoría...</option>
+                                {categories.map((cat: any) => (
+                                    <option key={cat.id} value={cat.id}>{cat.name}</option>
+                                ))}
                             </select>
                         </div>
                         <div className="form-group">
                             <label className="form-label">Marca</label>
                             <input
                                 className="form-control"
-                                value={formData.brand}
-                                onChange={e => setFormData({ ...formData, brand: e.target.value })}
+                                value={brand}
+                                onChange={e => setBrand(e.target.value)}
                                 required
                             />
                         </div>
@@ -121,8 +123,8 @@ export const EquipmentModelModal: React.FC<EquipmentModelModalProps> = ({ model,
                         <label className="form-label">Modelo del Fabricante</label>
                         <input
                             className="form-control"
-                            value={formData.modelName}
-                            onChange={e => setFormData({ ...formData, modelName: e.target.value })}
+                            value={modelName}
+                            onChange={e => setModelName(e.target.value)}
                             required
                         />
                     </div>
@@ -135,7 +137,7 @@ export const EquipmentModelModal: React.FC<EquipmentModelModalProps> = ({ model,
                             </button>
                         </div>
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                            {formData.specs.map((spec, index) => (
+                            {specs.map((spec, index) => (
                                 <div key={index} style={{ display: 'flex', gap: '8px' }}>
                                     <input
                                         placeholder="Clave (ej: RAM)"

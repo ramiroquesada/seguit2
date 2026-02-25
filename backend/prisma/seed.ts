@@ -1,4 +1,4 @@
-import { PrismaClient, Role, EquipmentType, EquipmentStatus, HistoryAction } from '@prisma/client';
+import { PrismaClient, Role, EquipmentStatus, HistoryAction } from '@prisma/client';
 import * as bcrypt from 'bcrypt';
 
 const prisma = new PrismaClient();
@@ -102,11 +102,21 @@ async function main() {
     create: { name: 'Sucursal Cardona', sectionId: secCardona.id },
   });
 
+  // Categories
+  const catPC = await prisma.category.upsert({ where: { name: 'PC' }, update: {}, create: { name: 'PC' } });
+  const catLaptop = await prisma.category.upsert({ where: { name: 'LAPTOP' }, update: {}, create: { name: 'LAPTOP' } });
+  const catPrinter = await prisma.category.upsert({ where: { name: 'PRINTER' }, update: {}, create: { name: 'PRINTER' } });
+  const catMonitor = await prisma.category.upsert({ where: { name: 'MONITOR' }, update: {}, create: { name: 'MONITOR' } });
+  const catModem = await prisma.category.upsert({ where: { name: 'MODEM' }, update: {}, create: { name: 'MODEM' } });
+  const catRouter = await prisma.category.upsert({ where: { name: 'ROUTER' }, update: {}, create: { name: 'ROUTER' } });
+  const catAntenna = await prisma.category.upsert({ where: { name: 'ANTENNA' }, update: {}, create: { name: 'ANTENNA' } });
+  const catOther = await prisma.category.upsert({ where: { name: 'OTHER' }, update: {}, create: { name: 'OTHER' } });
+
   // Sample equipment
   const equipmentData = [
     {
-      id: 2001,
-      type: EquipmentType.PC,
+      number: 2001,
+      categoryId: catPC.id,
       brand: 'Dell',
       model: 'OptiPlex 7090',
       serial: 'DL7090-001',
@@ -117,8 +127,8 @@ async function main() {
       acquiredAt: new Date('2022-03-15'),
     },
     {
-      id: 2002,
-      type: EquipmentType.LAPTOP,
+      number: 2002,
+      categoryId: catLaptop.id,
       brand: 'HP',
       model: 'EliteBook 840 G8',
       serial: 'HP840G8-002',
@@ -128,8 +138,8 @@ async function main() {
       acquiredAt: new Date('2021-07-20'),
     },
     {
-      id: 2003,
-      type: EquipmentType.PRINTER,
+      number: 2003,
+      categoryId: catPrinter.id,
       brand: 'HP',
       model: 'LaserJet Pro M404dn',
       serial: 'HPLJ-M404-003',
@@ -139,8 +149,8 @@ async function main() {
       acquiredAt: new Date('2021-07-20'),
     },
     {
-      id: 2004,
-      type: EquipmentType.PC,
+      number: 2004,
+      categoryId: catPC.id,
       brand: 'Lenovo',
       model: 'ThinkCentre M720q',
       serial: 'LN-M720-004',
@@ -151,8 +161,8 @@ async function main() {
       acquiredAt: new Date('2020-01-10'),
     },
     {
-      id: 2005,
-      type: EquipmentType.ROUTER,
+      number: 2005,
+      categoryId: catRouter.id,
       brand: 'MikroTik',
       model: 'RB3011UiAS-RM',
       serial: 'MT-RB3011-005',
@@ -162,8 +172,8 @@ async function main() {
       acquiredAt: new Date('2021-03-01'),
     },
     {
-      id: 2006,
-      type: EquipmentType.MODEM,
+      number: 2006,
+      categoryId: catModem.id,
       brand: 'Cisco',
       model: 'DPC3008',
       serial: 'CS-DPC3008-006',
@@ -173,8 +183,8 @@ async function main() {
       acquiredAt: new Date('2022-06-12'),
     },
     {
-      id: 2007,
-      type: EquipmentType.LAPTOP,
+      number: 2007,
+      categoryId: catLaptop.id,
       brand: 'Dell',
       model: 'Latitude 5420',
       serial: 'DL-LAT5420-007',
@@ -185,8 +195,8 @@ async function main() {
       acquiredAt: new Date('2021-11-05'),
     },
     {
-      id: 2008,
-      type: EquipmentType.ANTENNA,
+      number: 2008,
+      categoryId: catAntenna.id,
       brand: 'Ubiquiti',
       model: 'NanoStation M5',
       serial: 'UBQ-NSM5-008',
@@ -196,8 +206,8 @@ async function main() {
       acquiredAt: new Date('2020-08-30'),
     },
     {
-      id: 2009,
-      type: EquipmentType.PC,
+      number: 2009,
+      categoryId: catPC.id,
       brand: 'HP',
       model: 'ProDesk 600 G6',
       serial: 'HP-PD600-009',
@@ -207,8 +217,8 @@ async function main() {
       acquiredAt: new Date('2023-02-14'),
     },
     {
-      id: 2010,
-      type: EquipmentType.PRINTER,
+      number: 2010,
+      categoryId: catPrinter.id,
       brand: 'Epson',
       model: 'EcoTank L3250',
       serial: 'EP-L3250-010',
@@ -223,16 +233,19 @@ async function main() {
   // Process manual equipment first (with history)
   for (const eq of equipmentData) {
     await prisma.equipment.upsert({
-      where: { id: eq.id },
+      where: { number: eq.number },
       update: eq as any,
       create: eq as any,
     });
-    
-    const historyExists = await prisma.equipmentHistory.findFirst({ where: { equipmentId: eq.id } });
+
+    const createdEq = await prisma.equipment.findUnique({ where: { number: eq.number } });
+    if (!createdEq) continue;
+
+    const historyExists = await prisma.equipmentHistory.findFirst({ where: { equipmentId: createdEq.id } });
     if (!historyExists) {
       await prisma.equipmentHistory.create({
         data: {
-          equipmentId: eq.id,
+          equipmentId: createdEq.id,
           action: HistoryAction.CREATED,
           description: `Equipo registrado en el sistema. ${eq.notes ?? ''}`.trim(),
           userId: root.id,
@@ -243,19 +256,25 @@ async function main() {
   }
 
   // Realistic Data Generation Helpers
-  const generateRealisticData = (id: number, type: EquipmentType) => {
+  const categoryMap = {
+    'PC': catPC, 'LAPTOP': catLaptop, 'PRINTER': catPrinter, 'MONITOR': catMonitor,
+    'MODEM': catModem, 'ROUTER': catRouter, 'ANTENNA': catAntenna, 'OTHER': catOther
+  };
+  const categoryNames = Object.keys(categoryMap);
+
+  const generateRealisticData = (id: number, catName: string) => {
     const brands: Record<string, string[]> = {
-      [EquipmentType.PC]: ['Dell', 'HP', 'Lenovo', 'Acer'],
-      [EquipmentType.LAPTOP]: ['Dell', 'HP', 'Lenovo', 'Apple', 'ASUS'],
-      [EquipmentType.PRINTER]: ['HP', 'Epson', 'Brother', 'Samsung', 'Lexmark'],
-      [EquipmentType.ROUTER]: ['Cisco', 'MikroTik', 'TP-Link', 'Ubiquiti', 'Huawei'],
-      [EquipmentType.MODEM]: ['Cisco', 'Motorola', 'Arris', 'Technicolor'],
-      [EquipmentType.ANTENNA]: ['Ubiquiti', 'MikroTik', 'TP-Link'],
-      [EquipmentType.OTHER]: ['Genérico', 'Varios'],
+      'PC': ['Dell', 'HP', 'Lenovo', 'Acer'],
+      'LAPTOP': ['Dell', 'HP', 'Lenovo', 'Apple', 'ASUS'],
+      'PRINTER': ['HP', 'Epson', 'Brother', 'Samsung', 'Lexmark'],
+      'ROUTER': ['Cisco', 'MikroTik', 'TP-Link', 'Ubiquiti', 'Huawei'],
+      'MODEM': ['Cisco', 'Motorola', 'Arris', 'Technicolor'],
+      'ANTENNA': ['Ubiquiti', 'MikroTik', 'TP-Link'],
+      'OTHER': ['Genérico', 'Varios'],
     };
 
-    const brand = brands[type!] ? brands[type!][Math.floor(Math.random() * brands[type!].length)] : 'Genérico';
-    
+    const brand = brands[catName] ? brands[catName][Math.floor(Math.random() * brands[catName].length)] : 'Genérico';
+
     const models: Record<string, string[]> = {
       'Dell': ['OptiPlex 7080', 'Latitude 5410', 'Precision 3640', 'PowerEdge R640'],
       'HP': ['EliteDesk 800', 'ProBook 450', 'LaserJet Pro M404', 'ProLiant DL360'],
@@ -272,34 +291,34 @@ async function main() {
       'Varios': ['Misceláneo'],
     };
 
-    const model = (models[brand] || [`Model-${type}-${id}`])[Math.floor(Math.random() * (models[brand]?.length || 1))];
+    const model = (models[brand] || [`Model-${catName}-${id}`])[Math.floor(Math.random() * (models[brand]?.length || 1))];
 
-    const generateSpecs = (type: EquipmentType) => {
-      switch (type) {
-        case EquipmentType.PC:
-        case EquipmentType.LAPTOP:
+    const generateSpecs = (catName: string) => {
+      switch (catName) {
+        case 'PC':
+        case 'LAPTOP':
           return {
             cpu: ['Intel i3-10100', 'Intel i5-11400', 'Intel i7-12700', 'AMD Ryzen 5 5600', 'AMD Ryzen 7 5700X'][Math.floor(Math.random() * 5)],
             ram: ['8GB', '16GB', '32GB'][Math.floor(Math.random() * 3)],
             disk: ['256GB SSD', '512GB SSD', '1TB NVMe', '1TB HDD'][Math.floor(Math.random() * 4)],
             os: ['Windows 10 Pro', 'Windows 11 Pro', 'Ubuntu 22.04', 'macOS Sonoma'][Math.floor(Math.random() * 4)]
           };
-        case EquipmentType.PRINTER:
+        case 'PRINTER':
           return {
             tecnologia: ['Láser', 'Inyección de tinta', 'Térmica'][Math.floor(Math.random() * 3)],
             color: Math.random() > 0.5 ? 'Color' : 'Monocromática',
             conexion: ['USB', 'Red (RJ45)', 'WiFi', 'USB + Red'][Math.floor(Math.random() * 4)],
             ppm: [20, 30, 40, 55][Math.floor(Math.random() * 4)] + ' ppm'
           };
-        case EquipmentType.ROUTER:
-        case EquipmentType.MODEM:
+        case 'ROUTER':
+        case 'MODEM':
           return {
             puertos: [4, 8, 16, 24, 48][Math.floor(Math.random() * 5)] + ' Puertos',
             velocidad: ['100 Mbps', '1 Gbps', '10 Gbps'][Math.floor(Math.random() * 3)],
             wifi: Math.random() > 0.3 ? '802.11ax (WiFi 6)' : '802.11ac',
             backbone: Math.random() > 0.7 ? 'Fibra Óptica' : 'Cobre'
           };
-        case EquipmentType.ANTENNA:
+        case 'ANTENNA':
           return {
             frecuencia: ['2.4 GHz', '5 GHz', '60 GHz'][Math.floor(Math.random() * 3)],
             ganancia: [13, 23, 30][Math.floor(Math.random() * 3)] + ' dBi',
@@ -315,35 +334,35 @@ async function main() {
       brand,
       model,
       serial: `${brand.substring(0, 2).toUpperCase()}-${Math.random().toString(36).substring(2, 10).toUpperCase()}`,
-      specs: generateSpecs(type)
+      specs: generateSpecs(catName)
     };
   };
 
   // Bulk equipment (ids 1 to 2000)
-  const types = Object.values(EquipmentType);
   const statuses = Object.values(EquipmentStatus);
   const officesList = [offIntendente.id, offContaduria.id, offSoporte.id, offDolores.id, offCardona.id];
 
   console.log('📦 Generating bulk equipment (1-2000) with history chains...');
   for (let id = 1; id <= 2000; id++) {
-    const type = types[Math.floor(Math.random() * types.length)];
+    const catName = categoryNames[Math.floor(Math.random() * categoryNames.length)];
+    const categoryId = (categoryMap as any)[catName].id;
     const status = statuses[Math.floor(Math.random() * statuses.length)];
     const officeId = status === EquipmentStatus.RETIRED ? null : officesList[Math.floor(Math.random() * officesList.length)];
-    const realistic = generateRealisticData(id, type);
+    const realistic = generateRealisticData(id, catName);
     const acquiredAt = new Date(Date.now() - Math.floor(Math.random() * 10000000000));
 
     await prisma.equipment.upsert({
-      where: { id },
+      where: { number: id },
       update: {
-        type,
+        categoryId,
         status,
         officeId,
         ...realistic,
         acquiredAt,
       } as any,
       create: {
-        id,
-        type,
+        number: id,
+        categoryId,
         status,
         officeId,
         ...realistic,
@@ -351,9 +370,12 @@ async function main() {
       } as any,
     });
 
+    const eq = await prisma.equipment.findUnique({ where: { number: id } });
+    if (!eq) continue;
+
     // History chain generation
     const historyEntries: any[] = [];
-    
+
     // 1. Initial creation
     historyEntries.push({
       equipmentId: id,
@@ -383,7 +405,7 @@ async function main() {
     // 3. Random repairs (20% chance)
     if (Math.random() > 0.8) {
       const repairReasons = [
-        'Falla en fuente de poder', 
+        'Falla en fuente de poder',
         'Limpieza preventiva y cambio de pasta térmica',
         'Pantalla con píxeles muertos',
         'No enciende - posible falla de placa madre',
@@ -393,7 +415,7 @@ async function main() {
       const resolution = ['Reparado con cambio de piezas', 'Mantenimiento completado', 'Ajustes de software realizados'][Math.floor(Math.random() * 3)];
 
       const repairDate = new Date(acquiredAt.getTime() + 2000000000);
-      
+
       historyEntries.push({
         equipmentId: id,
         action: HistoryAction.REPAIR_IN,
@@ -407,7 +429,7 @@ async function main() {
       // If not currently in REPAIR, add REPAIR_OUT
       if (status !== EquipmentStatus.REPAIR) {
         historyEntries.push({
-          equipmentId: id,
+          equipmentId: eq.id,
           action: HistoryAction.REPAIR_OUT,
           description: `Reparación finalizada: ${resolution}`,
           userId: tech.id,
@@ -423,11 +445,14 @@ async function main() {
       const hash = `${id}-${h.action}-${h.date.getTime()}`;
       // Note: equipmentId is used here as a simple filter, we don't have a unique key for history other than ID
       // But since we are seeding, we'll just clear or check
+      const eq = await prisma.equipment.findUnique({ where: { number: id } });
+      if (!eq) continue;
+
       const exists = await prisma.equipmentHistory.findFirst({
-        where: { equipmentId: id, action: h.action, date: h.date }
+        where: { equipmentId: eq.id, action: h.action, date: h.date }
       });
       if (!exists) {
-        await prisma.equipmentHistory.create({ data: h as any });
+        await prisma.equipmentHistory.create({ data: { ...h, equipmentId: eq.id } as any });
       }
     }
   }

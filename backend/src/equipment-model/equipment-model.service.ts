@@ -9,12 +9,14 @@ export class EquipmentModelService {
     findAll() {
         return this.prisma.equipmentModel.findMany({
             orderBy: { name: 'asc' },
+            include: { category: true }
         });
     }
 
     async findOne(id: number) {
         const model = await this.prisma.equipmentModel.findUnique({
             where: { id },
+            include: { category: true }
         });
         if (!model) throw new NotFoundException('Modelo no encontrado');
         return model;
@@ -25,7 +27,13 @@ export class EquipmentModelService {
         if (exists) throw new BadRequestException('Ya existe un modelo con ese nombre');
 
         return this.prisma.equipmentModel.create({
-            data: dto,
+            data: {
+                name: dto.name,
+                categoryId: dto.categoryId,
+                brand: dto.brand,
+                modelName: dto.modelName,
+                specs: dto.specs,
+            }
         });
     }
 
@@ -33,7 +41,13 @@ export class EquipmentModelService {
         await this.findOne(id);
         return this.prisma.equipmentModel.update({
             where: { id },
-            data: dto,
+            data: {
+                ...(dto.name && { name: dto.name }),
+                ...(dto.categoryId && { categoryId: dto.categoryId }),
+                ...(dto.brand && { brand: dto.brand }),
+                ...(dto.modelName && { modelName: dto.modelName }),
+                ...(dto.specs && { specs: dto.specs }),
+            }
         });
     }
 

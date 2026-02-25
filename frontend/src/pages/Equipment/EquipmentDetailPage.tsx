@@ -52,30 +52,30 @@ export const EquipmentDetailPage: React.FC = () => {
         <div>
           <h1 style={{ margin: '0 0 8px 0', color: 'var(--color-text)' }}>Equipo #{eq.id}</h1>
           <div style={{ display: 'flex', gap: '8px' }}>
-            <Badge type="category" variant={eq.type} />
+            <Badge type="category" variant={eq.category?.name || 'Otro'} />
             <Badge type="status" variant={eq.status} />
           </div>
         </div>
         <div style={{ display: 'flex', gap: '12px' }}>
-          <button 
-            className="btn btn-secondary" 
+          <button
+            className="btn btn-secondary"
             onClick={() => setIsTransferModalOpen(true)}
             style={{ display: 'flex', alignItems: 'center', gap: '8px' }}
           >
             <MapPin size={18} /> Trasladar
           </button>
-          
+
           {eq.status === 'REPAIR' ? (
-            <button 
-              className="btn btn-primary" 
+            <button
+              className="btn btn-primary"
               onClick={() => handleStatusChange('ACTIVE', 'Reparación finalizada con éxito.')}
               style={{ display: 'flex', alignItems: 'center', gap: '8px' }}
             >
               <ShieldCheck size={18} /> Marcar como Operativo
             </button>
           ) : (
-            <button 
-              className="btn btn-secondary" 
+            <button
+              className="btn btn-secondary"
               onClick={() => handleStatusChange('REPAIR', 'Falla detectada: ')}
               style={{ display: 'flex', alignItems: 'center', gap: '8px' }}
             >
@@ -99,15 +99,15 @@ export const EquipmentDetailPage: React.FC = () => {
             <div>
               <strong style={{ color: 'var(--color-text-muted)' }}>Ubicación:</strong>
               <div style={{ marginLeft: '12px', marginTop: '4px' }}>
-                <span style={{ 
+                <span style={{
                   display: 'inline-block',
                   padding: '2px 8px',
                   borderRadius: '4px',
                   fontSize: '12px',
                   fontWeight: 600,
-                  backgroundColor: 'var(--color-primary-light)20', 
-                  color: 'var(--color-primary-dark)', 
-                  border: '1px solid var(--color-primary-light)40' 
+                  backgroundColor: 'var(--color-primary-light)20',
+                  color: 'var(--color-primary-dark)',
+                  border: '1px solid var(--color-primary-light)40'
                 }}>
                   {eq.office?.name || 'ST'}
                 </span>
@@ -123,12 +123,14 @@ export const EquipmentDetailPage: React.FC = () => {
         <div className="card">
           <h2 style={{ fontSize: '18px', marginBottom: '16px' }}>Especificaciones Técnicas</h2>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px', marginBottom: '20px' }}>
-            {Object.entries(eq.specs || {}).map(([key, value]) => (
-              <div key={key} style={{ backgroundColor: 'var(--color-background)', padding: '8px 12px', borderRadius: '4px', border: '1px solid var(--color-border)' }}>
-                <div style={{ fontSize: '11px', color: 'var(--color-text-muted)', textTransform: 'uppercase', letterSpacing: '0.5px' }}>{key}</div>
-                <div style={{ fontSize: '14px', fontWeight: 500 }}>{String(value)}</div>
-              </div>
-            ))}
+            {Object.entries(eq.specs || {})
+              .filter(([key]) => key !== 'tipoOld')
+              .map(([key, value]) => (
+                <div key={key} style={{ backgroundColor: 'var(--color-background)', padding: '8px 12px', borderRadius: '4px', border: '1px solid var(--color-border)' }}>
+                  <div style={{ fontSize: '11px', color: 'var(--color-text-muted)', textTransform: 'uppercase', letterSpacing: '0.5px' }}>{key}</div>
+                  <div style={{ fontSize: '14px', fontWeight: 500 }}>{String(value)}</div>
+                </div>
+              ))}
             {(!eq.specs || Object.keys(eq.specs).length === 0) && <div style={{ color: 'var(--color-text-muted)', fontStyle: 'italic' }}>Sin especificaciones</div>}
           </div>
           <div>
@@ -147,7 +149,7 @@ export const EquipmentDetailPage: React.FC = () => {
         <HistoryTimeline events={history || []} />
       </div>
 
-      <TransferModal 
+      <TransferModal
         isOpen={isTransferModalOpen}
         onClose={() => setIsTransferModalOpen(false)}
         onConfirm={handleTransfer}

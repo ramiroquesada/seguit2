@@ -10,11 +10,11 @@ export const EquipmentListPage: React.FC = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const initialOfficeId = searchParams.get('officeId') || '';
-  
+
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [params, setParams] = useState({
     page: 1, limit: 50, search: '', sortBy: 'id', order: 'desc',
-    type: '', status: '', cityId: '', sectionId: '', officeId: initialOfficeId
+    categoryId: '', status: '', cityId: '', sectionId: '', officeId: initialOfficeId
   });
 
   const { data, isLoading } = useEquipment(params);
@@ -33,23 +33,27 @@ export const EquipmentListPage: React.FC = () => {
 
   const columns: Column<any>[] = [
     { key: 'id', label: 'ID', sortable: true },
-    { key: 'type', label: 'Tipo', sortable: true, render: (eq) => <Badge type="category" variant={eq.type} /> },
-    { key: 'brandModel', label: 'Marca / Modelo', render: (eq) => (
-      <div style={{ display: 'flex', flexDirection: 'column' }}>
-        <span style={{ fontWeight: 500 }}>{eq.brand || '-'}</span>
-        <span style={{ fontSize: '13px', color: 'var(--color-text-muted)' }}>{eq.model || '-'}</span>
-      </div>
-    )},
+    { key: 'category', label: 'Tipo', sortable: false, render: (eq) => <Badge type="category" variant={eq.category?.name || 'Otro'} /> },
+    {
+      key: 'brandModel', label: 'Marca / Modelo', render: (eq) => (
+        <div style={{ display: 'flex', flexDirection: 'column' }}>
+          <span style={{ fontWeight: 500 }}>{eq.brand || '-'}</span>
+          <span style={{ fontSize: '13px', color: 'var(--color-text-muted)' }}>{eq.model || '-'}</span>
+        </div>
+      )
+    },
     { key: 'serial', label: 'Serie' },
     { key: 'status', label: 'Estado', sortable: true, render: (eq) => <Badge type="status" variant={eq.status} /> },
-    { key: 'office', label: 'Ubicación', render: (eq) => (
-      <div style={{ display: 'flex', flexDirection: 'column' }}>
-        <span>{eq.office?.name || 'Sin oficina'}</span>
-        <span style={{ fontSize: '12px', color: 'var(--color-text-muted)' }}>
-          {eq.office?.section?.city?.name} - {eq.office?.section?.name}
-        </span>
-      </div>
-    )}
+    {
+      key: 'office', label: 'Ubicación', render: (eq) => (
+        <div style={{ display: 'flex', flexDirection: 'column' }}>
+          <span>{eq.office?.name || 'Sin oficina'}</span>
+          <span style={{ fontSize: '12px', color: 'var(--color-text-muted)' }}>
+            {eq.office?.section?.city?.name} - {eq.office?.section?.name}
+          </span>
+        </div>
+      )
+    }
   ];
 
   return (
@@ -59,10 +63,10 @@ export const EquipmentListPage: React.FC = () => {
           <div style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)', color: 'var(--color-text-muted)' }}>
             <Search size={18} />
           </div>
-          <input 
-            type="text" 
-            className="form-control" 
-            placeholder="Buscar ID, marca, modelo, serie..." 
+          <input
+            type="text"
+            className="form-control"
+            placeholder="Buscar ID, marca, modelo, serie..."
             style={{ paddingLeft: '40px' }}
             value={params.search}
             onChange={handleSearch}
@@ -93,8 +97,8 @@ export const EquipmentListPage: React.FC = () => {
 
         {data?.meta && data.data.length < data.meta.total && (
           <div style={{ display: 'flex', justifyContent: 'center', padding: '16px 0' }}>
-            <button 
-              className="btn btn-secondary" 
+            <button
+              className="btn btn-secondary"
               onClick={() => setParams(prev => ({ ...prev, limit: prev.limit + 50 }))}
               disabled={isLoading}
               style={{ minWidth: '200px' }}
@@ -105,11 +109,11 @@ export const EquipmentListPage: React.FC = () => {
         )}
       </div>
 
-      <FilterDrawer 
-        isOpen={isFilterOpen} 
-        onClose={() => setIsFilterOpen(false)} 
-        params={params} 
-        setParams={setParams} 
+      <FilterDrawer
+        isOpen={isFilterOpen}
+        onClose={() => setIsFilterOpen(false)}
+        params={params}
+        setParams={setParams}
       />
     </div>
   );

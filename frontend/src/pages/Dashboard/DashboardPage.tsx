@@ -52,7 +52,7 @@ export const DashboardPage: React.FC = () => {
 
   const columns: Column<any>[] = [
     { key: 'id', label: 'ID' },
-    { key: 'type', label: 'Tipo', render: (eq) => <Badge type="category" variant={eq.type} /> },
+    { key: 'category', label: 'Tipo', render: (eq) => <Badge type="category" variant={eq.category?.name || 'Otro'} /> },
     { key: 'brandModel', label: 'Marca / Modelo', render: (eq) => `${eq.brand || '-'} / ${eq.model || '-'}` },
     { key: 'status', label: 'Estado', render: (eq) => <Badge type="status" variant={eq.status} /> },
     { key: 'createdAt', label: 'Agregado', render: (eq) => format(new Date(eq.createdAt), "dd/MM/yyyy", { locale: es }) }
@@ -68,7 +68,7 @@ export const DashboardPage: React.FC = () => {
           ))}
         </div>
       </section>
- 
+
       <section>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
           <h2 style={{ fontSize: '20px', fontWeight: 600, color: 'var(--color-text)', margin: 0 }}>Últimos Ingresos</h2>
@@ -82,11 +82,11 @@ export const DashboardPage: React.FC = () => {
             onRowClick={(item) => navigate(`/equipment/${item.id}`)}
             isLoading={isLoading}
           />
-          
+
           {stats.newest.length < stats.total && (
             <div style={{ display: 'flex', justifyContent: 'center' }}>
-              <button 
-                className="btn btn-secondary" 
+              <button
+                className="btn btn-secondary"
                 onClick={() => setLimit(prev => prev + 25)}
                 disabled={isLoading}
               >

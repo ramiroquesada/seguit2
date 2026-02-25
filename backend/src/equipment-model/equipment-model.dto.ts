@@ -1,13 +1,12 @@
-import { IsString, IsEnum, IsObject, IsOptional } from 'class-validator';
-import { EquipmentType } from '@prisma/client';
+import { IsString, IsEnum, IsObject, IsOptional, IsInt } from 'class-validator';
 import { PartialType } from '@nestjs/mapped-types';
 
 export class CreateEquipmentModelDto {
     @IsString()
     name: string;
 
-    @IsEnum(EquipmentType)
-    type: EquipmentType;
+    @IsInt()
+    categoryId: number;
 
     @IsString()
     brand: string;

@@ -4,7 +4,7 @@ import { CreateCityDto, CreateSectionDto, CreateOfficeDto } from './config-locat
 
 @Injectable()
 export class ConfigLocationsService {
-  constructor(private prisma: PrismaService) {}
+  constructor(private prisma: PrismaService) { }
 
   // ── CITIES ──────────────────────────────────────────────────────────────
   getCities() {
@@ -18,7 +18,7 @@ export class ConfigLocationsService {
     return this.prisma.city.create({ data: { name: dto.name } });
   }
 
-  updateCity(id: number, name: string) {
+  updateCity(id: number, name?: string) {
     return this.prisma.city.update({ where: { id }, data: { name } });
   }
 
@@ -44,8 +44,11 @@ export class ConfigLocationsService {
     });
   }
 
-  updateSection(id: number, name: string) {
-    return this.prisma.section.update({ where: { id }, data: { name } });
+  updateSection(id: number, name?: string, cityId?: number) {
+    return this.prisma.section.update({
+      where: { id },
+      data: { name, cityId },
+    });
   }
 
   async deleteSection(id: number) {
@@ -70,13 +73,47 @@ export class ConfigLocationsService {
     });
   }
 
-  updateOffice(id: number, name: string) {
-    return this.prisma.office.update({ where: { id }, data: { name } });
+  updateOffice(id: number, name?: string, sectionId?: number) {
+    return this.prisma.office.update({
+      where: { id },
+      data: { name, sectionId },
+    });
   }
 
   async deleteOffice(id: number) {
     const equipment = await this.prisma.equipment.count({ where: { officeId: id } });
     if (equipment > 0) throw new BadRequestException('La oficina tiene equipos asignados');
     return this.prisma.office.delete({ where: { id } });
+  }
+
+  async mergeOffices(targetId: number, sourceIds: number[]) {
+    // 1. Validate that all offices exist
+    const allIds = [targetId, ...sourceIds];
+    const offices = await this.prisma.office.findMany({ where: { id: { in: allIds } } });
+    if (offices.length !== allIds.length) {
+      throw new NotFoundException('Una o más oficinas no existen');
+    }
+
+    // 2. Perform merge in a transaction
+    return this.prisma.$transaction(async (tx) => {
+      // Move equipment
+      await tx.equipment.updateMany({
+        where: { officeId: { in: sourceIds } },
+        data: { officeId: targetId },
+      });
+
+      // Move history records
+      await tx.equipmentHistory.updateMany({
+        where: { toOfficeId: { in: sourceIds } },
+        data: { toOfficeId: targetId },
+      });
+
+      // Delete source offices
+      await tx.office.deleteMany({
+        where: { id: { in: sourceIds } },
+      });
+
+      return { success: true, mergedCount: sourceIds.length };
+    });
   }
 }

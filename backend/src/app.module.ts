@@ -6,6 +6,7 @@ import { UserModule } from './user/user.module';
 import { ConfigLocationsModule } from './config-locations/config-locations.module';
 import { EquipmentModule } from './equipment/equipment.module';
 import { EquipmentModelModule } from './equipment-model/equipment-model.module';
+import { CategoriesModule } from './categories/categories.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { EquipmentModelModule } from './equipment-model/equipment-model.module';
     ConfigLocationsModule,
     EquipmentModule,
     EquipmentModelModule,
+    CategoriesModule,
   ],
 })
 export class AppModule { }

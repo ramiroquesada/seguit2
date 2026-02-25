@@ -3,7 +3,8 @@ import api from './client';
 export interface EquipmentModel {
     id: number;
     name: string;
-    type: string;
+    categoryId: number;
+    category?: { id: number; name: string };
     brand: string;
     modelName: string;
     specs: Record<string, any>;

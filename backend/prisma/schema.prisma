@@ -12,14 +12,13 @@ enum Role {
   TECHNICIAN
 }
 
-enum EquipmentType {
-  PC
-  LAPTOP
-  MODEM
-  ROUTER
-  PRINTER
-  ANTENNA
-  OTHER
+model Category {
+  id        Int      @id @default(autoincrement())
+  name      String   @unique
+  createdAt DateTime @default(now())
+
+  equipment      Equipment[]
+  equipmentModels EquipmentModel[]
 }
 
 enum EquipmentStatus {
@@ -77,8 +76,10 @@ model Office {
 }
 
 model Equipment {
-  id          Int             @id
-  type        EquipmentType
+  id          Int             @id @default(autoincrement())
+  number      Int             @unique
+  categoryId  Int
+  category    Category        @relation(fields: [categoryId], references: [id])
   brand       String
   model       String
   serial      String?
@@ -99,14 +100,15 @@ model Equipment {
 }
 
 model EquipmentModel {
-  id        Int           @id @default(autoincrement())
-  name      String        @unique
-  type      EquipmentType
-  brand     String
-  modelName String
-  specs     Json
-  createdAt DateTime      @default(now())
-  updatedAt DateTime      @updatedAt
+  id          Int           @id @default(autoincrement())
+  name        String        @unique
+  categoryId  Int
+  category    Category      @relation(fields: [categoryId], references: [id])
+  brand       String
+  modelName   String
+  specs       Json
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
 
   equipment Equipment[]
 }

@@ -5,7 +5,9 @@ import { EquipmentStatus, HistoryAction } from '@prisma/client';
 
 const EQUIPMENT_SELECT = {
   id: true,
-  type: true,
+  number: true,
+  categoryId: true,
+  category: { select: { id: true, name: true } },
   brand: true,
   model: true,
   serial: true,
@@ -19,7 +21,8 @@ const EQUIPMENT_SELECT = {
     select: {
       id: true,
       name: true,
-      type: true,
+      categoryId: true,
+      category: { select: { id: true, name: true } },
       brand: true,
       modelName: true,
       specs: true,
@@ -60,11 +63,11 @@ export class EquipmentService {
         { model: { contains: s, mode: 'insensitive' } },
         { serial: { contains: s, mode: 'insensitive' } },
         { notes: { contains: s, mode: 'insensitive' } },
-        ...(isNaN(numVal) ? [] : [{ id: numVal }]),
+        ...(isNaN(numVal) ? [] : [{ number: numVal }]),
       ];
     }
 
-    if (q.type) where.type = q.type;
+    if (q.categoryId) where.categoryId = q.categoryId;
     if (q.status) where.status = q.status;
 
     if (q.officeId) {
@@ -76,8 +79,8 @@ export class EquipmentService {
     }
 
     // build orderBy
-    const validSortFields = ['id', 'type', 'brand', 'model', 'status', 'createdAt', 'updatedAt', 'acquiredAt'];
-    const sortBy = validSortFields.includes(q.sortBy ?? '') ? q.sortBy! : 'id';
+    const validSortFields = ['id', 'number', 'categoryId', 'brand', 'model', 'status', 'createdAt', 'updatedAt', 'acquiredAt'];
+    const sortBy = validSortFields.includes(q.sortBy ?? '') ? q.sortBy! : 'number';
     const order = q.order === 'desc' ? 'desc' : 'asc';
 
     const [data, total] = await this.prisma.$transaction([
@@ -110,7 +113,7 @@ export class EquipmentService {
     const [total, byStatus, byType, byCity] = await this.prisma.$transaction([
       this.prisma.equipment.count(),
       this.prisma.equipment.groupBy({ by: ['status'], _count: { _all: true } } as any),
-      this.prisma.equipment.groupBy({ by: ['type'], _count: { _all: true } } as any),
+      this.prisma.equipment.groupBy({ by: ['categoryId'], _count: { _all: true } } as any),
       this.prisma.city.findMany({
         select: {
           name: true,
@@ -129,28 +132,28 @@ export class EquipmentService {
     const byStatusMap = Object.fromEntries(
       (byStatus as any[]).map((s) => [s.status, s._count?._all ?? 0]),
     );
-    const byTypeMap = Object.fromEntries(
-      (byType as any[]).map((t) => [t.type, t._count?._all ?? 0]),
+    const byCategoryMap = Object.fromEntries(
+      (byType as any[]).map((t) => [t.categoryId, t._count?._all ?? 0]),
     );
 
     // newest items
     const newest = await this.prisma.equipment.findMany({
       take: newestLimit,
       orderBy: { createdAt: 'desc' },
-      select: { id: true, type: true, brand: true, model: true, status: true, createdAt: true },
+      select: { id: true, number: true, categoryId: true, category: { select: { name: true } }, brand: true, model: true, status: true, createdAt: true },
     });
 
-    return { total, byStatus: byStatusMap, byType: byTypeMap, newest };
+    return { total, byStatus: byStatusMap, byCategory: byCategoryMap, newest };
   }
 
   async create(dto: CreateEquipmentDto, userId: number) {
-    const existing = await this.prisma.equipment.findUnique({ where: { id: dto.id } });
-    if (existing) throw new BadRequestException(`El ID ${dto.id} ya existe`);
+    const existing = await this.prisma.equipment.findUnique({ where: { number: dto.number } });
+    if (existing) throw new BadRequestException(`El número de equipo ${dto.number} ya existe`);
 
     const equipment = await this.prisma.equipment.create({
       data: {
-        id: dto.id,
-        type: dto.type,
+        number: dto.number,
+        categoryId: dto.categoryId,
         brand: dto.brand,
         model: dto.model,
         serial: dto.serial,
@@ -183,7 +186,7 @@ export class EquipmentService {
     const updated = await this.prisma.equipment.update({
       where: { id },
       data: {
-        ...(dto.type && { type: dto.type }),
+        ...(dto.categoryId && { categoryId: dto.categoryId }),
         ...(dto.brand && { brand: dto.brand }),
         ...(dto.model && { model: dto.model }),
         ...(dto.serial !== undefined && { serial: dto.serial }),
@@ -253,9 +256,9 @@ export class EquipmentService {
 
   async getNextId() {
     const last = await this.prisma.equipment.findFirst({
-      orderBy: { id: 'desc' },
-      select: { id: true },
+      orderBy: { number: 'desc' },
+      select: { number: true },
     });
-    return { nextId: (last?.id ?? 1999) + 1 };
+    return { nextId: (last?.number ?? 1999) + 1 };
   }
 }
