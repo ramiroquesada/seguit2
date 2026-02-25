@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { Plus, Edit2, Trash2, MapPin, Building2, Landmark } from 'lucide-react';
 import { locationsApi } from '../../api/locations.api';
@@ -8,6 +9,7 @@ import { LocationModal } from './LocationModal';
 import { EquipmentModelModal } from './EquipmentModelModal';
 
 export const SettingsPage: React.FC = () => {
+  const navigate = useNavigate();
   const queryClient = useQueryClient();
   const [activeTab, setActiveTab] = useState<'locations' | 'models'>('locations');
   const [selectedCityId, setSelectedCityId] = useState<number | null>(null);
@@ -31,6 +33,21 @@ export const SettingsPage: React.FC = () => {
   const { data: sections = [], isLoading: loadingSections } = useQuery({ queryKey: ['sections', selectedCityId], queryFn: () => locationsApi.getSections(selectedCityId!), enabled: activeTab === 'locations' && !!selectedCityId });
   const { data: offices = [], isLoading: loadingOffices } = useQuery({ queryKey: ['offices', selectedSectionId], queryFn: () => locationsApi.getOffices(selectedSectionId!), enabled: activeTab === 'locations' && !!selectedSectionId });
   const { data: models = [], isLoading: loadingModels } = useQuery({ queryKey: ['equipment-models'], queryFn: equipmentModelsApi.getAll, enabled: activeTab === 'models' });
+
+  // Default selections
+  React.useEffect(() => {
+    if (cities.length > 0 && !selectedCityId) {
+      const mercedes = cities.find(c => c.name.toLowerCase() === 'mercedes');
+      if (mercedes) setSelectedCityId(mercedes.id);
+    }
+  }, [cities, selectedCityId]);
+
+  React.useEffect(() => {
+    if (sections.length > 0 && !selectedSectionId) {
+      const informatica = sections.find(s => s.name.toLowerCase() === 'informática');
+      if (informatica) setSelectedSectionId(informatica.id);
+    }
+  }, [sections, selectedSectionId]);
 
   // Mutations
   const locationMutation = useMutation({
@@ -130,7 +147,7 @@ export const SettingsPage: React.FC = () => {
         <div style={{ display: 'flex', gap: '24px' }}>
           {renderLocationColumn('Ciudades', <Landmark size={18} />, 'city', cities, loadingCities, selectedCityId, id => { setSelectedCityId(id); setSelectedSectionId(null); })}
           {renderLocationColumn('Secciones', <MapPin size={18} />, 'section', sections, loadingSections, selectedSectionId, id => setSelectedSectionId(id), !selectedCityId)}
-          {renderLocationColumn('Oficinas', <Building2 size={18} />, 'office', offices, loadingOffices, null, () => { }, !selectedSectionId)}
+          {renderLocationColumn('Oficinas', <Building2 size={18} />, 'office', offices, loadingOffices, null, id => navigate(`/equipment?officeId=${id}`), !selectedSectionId)}
         </div>
       ) : (
         <div className="card" style={{ padding: 0 }}>

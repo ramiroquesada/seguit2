@@ -13,7 +13,7 @@ export const EquipmentFormPage: React.FC = () => {
   const [loading, setLoading] = useState(false);
 
   const [formData, setFormData] = useState({
-    code: '', type: 'PC', brand: '', model: '', serial: '', status: 'ACTIVE', notes: '',
+    id: '', type: 'PC', brand: '', model: '', serial: '', status: 'ACTIVE', notes: '',
     cityId: '', sectionId: '', officeId: '',
     modelId: '' as string | number,
     specs: [] as { key: string; value: string }[],
@@ -45,7 +45,7 @@ export const EquipmentFormPage: React.FC = () => {
         }
 
         setFormData({
-          code: String(eq.code), type: eq.type, brand: eq.brand || '', model: eq.model || '',
+          id: String(eq.id), type: eq.type, brand: eq.brand || '', model: eq.model || '',
           serial: eq.serial || '', status: eq.status, notes: eq.notes || '',
           cityId: String(cityId), sectionId: String(sectionId), officeId: String(officeId),
           modelId: eq.equipmentModel?.id || '',
@@ -53,7 +53,7 @@ export const EquipmentFormPage: React.FC = () => {
         });
       });
     } else {
-      equipmentApi.getNextCode().then((res: any) => setFormData(f => ({ ...f, code: String(res.nextCode) })));
+      equipmentApi.getNextId().then((res: any) => setFormData(f => ({ ...f, id: String(res.nextId) })));
     }
   }, [id, isEditing]);
 
@@ -114,7 +114,7 @@ export const EquipmentFormPage: React.FC = () => {
 
       const payload: any = {
         ...formData,
-        code: Number(formData.code),
+        id: Number(formData.id),
         officeId: formData.officeId ? Number(formData.officeId) : null,
         modelId: formData.modelId ? Number(formData.modelId) : null,
         specs: specsObj,
@@ -153,8 +153,8 @@ export const EquipmentFormPage: React.FC = () => {
           <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
               <div className="form-group">
-                <label className="form-label">Código de Inventario</label>
-                <input className="form-control" type="number" value={formData.code} onChange={e => setFormData({ ...formData, code: e.target.value })} required disabled={isEditing} />
+                <label className="form-label">ID de Inventario</label>
+                <input className="form-control" type="number" value={formData.id} onChange={e => setFormData({ ...formData, id: e.target.value })} required disabled={isEditing} />
               </div>
               <div className="form-group">
                 <label className="form-label">Plantilla de Modelo (Opcional)</label>

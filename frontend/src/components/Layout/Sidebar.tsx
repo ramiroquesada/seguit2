@@ -25,8 +25,16 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, toggleSidebar }) => {
     <aside className={`sidebar ${isCollapsed ? 'collapsed' : ''}`}>
       <div className="sidebar-header">
         <div className="sidebar-logo">
-          {!isCollapsed && <span className="logo-text">Seguit <span className="logo-version">2.0</span></span>}
-          {isCollapsed && <span className="logo-text-short">S2</span>}
+          {!isCollapsed && (
+            <span className="logo-text">
+              Seguit <span>2.0</span>
+            </span>
+          )}
+          <img 
+            src="https://soriano.gub.uy/image/logo_escudo.svg" 
+            alt="Soriano" 
+            className="logo-img"
+          />
         </div>
       </div>
 

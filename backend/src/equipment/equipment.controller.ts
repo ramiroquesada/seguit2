@@ -19,8 +19,8 @@ export class EquipmentController {
     return this.svc.getStats(limit ? +limit : 25); 
   }
 
-  @Get('next-code')
-  getNextCode() { return this.svc.getNextCode(); }
+  @Get('next-id')
+  getNextId() { return this.svc.getNextId(); }
 
   @Get()
   findAll(@Query() q: QueryEquipmentDto) { return this.svc.findAll(q); }

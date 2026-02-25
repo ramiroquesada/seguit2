@@ -51,7 +51,7 @@ export const DashboardPage: React.FC = () => {
   ];
 
   const columns: Column<any>[] = [
-    { key: 'code', label: 'Código' },
+    { key: 'id', label: 'ID' },
     { key: 'type', label: 'Tipo', render: (eq) => <Badge type="category" variant={eq.type} /> },
     { key: 'brandModel', label: 'Marca / Modelo', render: (eq) => `${eq.brand || '-'} / ${eq.model || '-'}` },
     { key: 'status', label: 'Estado', render: (eq) => <Badge type="status" variant={eq.status} /> },
@@ -68,7 +68,7 @@ export const DashboardPage: React.FC = () => {
           ))}
         </div>
       </section>
-
+ 
       <section>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
           <h2 style={{ fontSize: '20px', fontWeight: 600, color: 'var(--color-text)', margin: 0 }}>Últimos Ingresos</h2>

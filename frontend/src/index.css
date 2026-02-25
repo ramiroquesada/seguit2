@@ -1,18 +1,19 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
 :root {
-  /* Colors */
-  --color-primary: #1B5E20;
-  --color-primary-light: #2E7D32;
-  --color-primary-dark: #124016;
+  /* Colors - Inspired by soriano.gub.uy */
+  --color-primary: #00A79D;
+  --color-primary-light: #33b9b1;
+  --color-primary-dark: #00857d;
+  --color-secondary: #003366;
   --color-surface: #ffffff;
   --color-background: #f7f9fc;
   --color-text: #1f2937;
   --color-text-muted: #6b7280;
-  --color-border: #e5e7eb;
-  --color-error: #ef4444;
-  --color-success: #10b981;
-  --color-warning: #f59e0b;
+  --color-border: #e2e8f0;
+  --color-error: #e11d48;
+  --color-success: #059669;
+  --color-warning: #d97706;
   
   /* Status Colors (Badges, etc) */
   --status-active-bg: #d1fae5;
@@ -35,15 +36,16 @@
 }
 
 [data-theme='dark'] {
-  --color-primary: #2E7D32;
-  --color-primary-light: #4CAF50;
-  --color-primary-dark: #1B5E20;
-  --color-surface: #1f2937;
-  --color-background: #111827;
-  --color-text: #f9fafb;
-  --color-text-muted: #9ca3af;
-  --color-border: #374151;
-  --color-error: #f87171;
+  --color-primary: #00A79D;
+  --color-primary-light: #4dbfba;
+  --color-primary-dark: #00857d;
+  --color-secondary: #0f172a;
+  --color-surface: #1e293b;
+  --color-background: #020617;
+  --color-text: #f8fafc;
+  --color-text-muted: #94a3b8;
+  --color-border: #1e293b;
+  --color-error: #fb7185;
   
   --status-active-bg: rgba(16, 185, 129, 0.2);
   --status-active-text: #34d399;
@@ -181,7 +183,7 @@ a:hover {
 .form-control:focus {
   outline: none;
   border-color: var(--color-primary);
-  box-shadow: 0 0 0 3px rgba(27, 94, 32, 0.1);
+  box-shadow: 0 0 0 3px rgba(0, 167, 157, 0.1);
 }
 
 /* Loading Spinner */

@@ -40,8 +40,8 @@ export const equipmentApi = {
     return response.data;
   },
 
-  getNextCode: async () => {
-    const response = await api.get('/equipment/next-code');
+  getNextId: async () => {
+    const response = await api.get('/equipment/next-id');
     return response.data;
   },
 };

@@ -5,7 +5,7 @@ import { Type } from 'class-transformer';
 
 export class CreateEquipmentDto {
   @IsInt()
-  code: number;
+  id: number;
 
   @IsEnum(EquipmentType)
   type: EquipmentType;
@@ -45,7 +45,11 @@ export class CreateEquipmentDto {
   acquiredAt?: string;
 }
 
-export class UpdateEquipmentDto extends PartialType(CreateEquipmentDto) { }
+export class UpdateEquipmentDto extends PartialType(CreateEquipmentDto) {
+  @IsString()
+  @IsOptional()
+  historyDescription?: string;
+}
 
 export class QueryEquipmentDto {
   @IsString()

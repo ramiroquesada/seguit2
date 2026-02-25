@@ -5,7 +5,6 @@ import { EquipmentStatus, HistoryAction } from '@prisma/client';
 
 const EQUIPMENT_SELECT = {
   id: true,
-  code: true,
   type: true,
   brand: true,
   model: true,
@@ -61,7 +60,7 @@ export class EquipmentService {
         { model: { contains: s, mode: 'insensitive' } },
         { serial: { contains: s, mode: 'insensitive' } },
         { notes: { contains: s, mode: 'insensitive' } },
-        ...(isNaN(numVal) ? [] : [{ code: numVal }]),
+        ...(isNaN(numVal) ? [] : [{ id: numVal }]),
       ];
     }
 
@@ -77,8 +76,8 @@ export class EquipmentService {
     }
 
     // build orderBy
-    const validSortFields = ['code', 'type', 'brand', 'model', 'status', 'createdAt', 'updatedAt', 'acquiredAt'];
-    const sortBy = validSortFields.includes(q.sortBy ?? '') ? q.sortBy! : 'code';
+    const validSortFields = ['id', 'type', 'brand', 'model', 'status', 'createdAt', 'updatedAt', 'acquiredAt'];
+    const sortBy = validSortFields.includes(q.sortBy ?? '') ? q.sortBy! : 'id';
     const order = q.order === 'desc' ? 'desc' : 'asc';
 
     const [data, total] = await this.prisma.$transaction([
@@ -138,19 +137,19 @@ export class EquipmentService {
     const newest = await this.prisma.equipment.findMany({
       take: newestLimit,
       orderBy: { createdAt: 'desc' },
-      select: { id: true, code: true, type: true, brand: true, model: true, status: true, createdAt: true },
+      select: { id: true, type: true, brand: true, model: true, status: true, createdAt: true },
     });
 
     return { total, byStatus: byStatusMap, byType: byTypeMap, newest };
   }
 
   async create(dto: CreateEquipmentDto, userId: number) {
-    const existing = await this.prisma.equipment.findUnique({ where: { code: dto.code } });
-    if (existing) throw new BadRequestException(`El código ${dto.code} ya existe`);
+    const existing = await this.prisma.equipment.findUnique({ where: { id: dto.id } });
+    if (existing) throw new BadRequestException(`El ID ${dto.id} ya existe`);
 
     const equipment = await this.prisma.equipment.create({
       data: {
-        code: dto.code,
+        id: dto.id,
         type: dto.type,
         brand: dto.brand,
         model: dto.model,
@@ -181,24 +180,6 @@ export class EquipmentService {
   async update(id: number, dto: UpdateEquipmentDto, userId: number) {
     const current = await this.findOne(id);
 
-    // detect meaningful changes for auto-history
-    const historyItems: { action: HistoryAction; description: string; extra?: object }[] = [];
-
-    if (dto.status && dto.status !== current.status) {
-      historyItems.push({
-        action: HistoryAction.STATUS_CHANGE,
-        description: `Estado cambiado de ${current.status} a ${dto.status}`,
-      });
-    }
-
-    if (dto.officeId !== undefined && dto.officeId !== (current.office?.id ?? null)) {
-      historyItems.push({
-        action: HistoryAction.TRANSFER,
-        description: `Traslado de oficina`,
-        extra: { fromOfficeId: current.office?.id ?? undefined, toOfficeId: dto.officeId },
-      });
-    }
-
     const updated = await this.prisma.equipment.update({
       where: { id },
       data: {
@@ -216,15 +197,48 @@ export class EquipmentService {
       select: EQUIPMENT_SELECT,
     });
 
-    // create auto history entries
-    for (const h of historyItems) {
+    // Detect meaningful changes for auto-history
+    if (dto.status && dto.status !== current.status) {
+      let action: HistoryAction = HistoryAction.STATUS_CHANGE;
+      let description = dto.historyDescription || `Estado cambiado de ${current.status} a ${dto.status}`;
+
+      if (dto.status === EquipmentStatus.REPAIR) {
+        action = HistoryAction.REPAIR_IN;
+        if (!dto.historyDescription) description = 'Ingreso a reparación';
+      } else if (current.status === EquipmentStatus.REPAIR && dto.status === EquipmentStatus.ACTIVE) {
+        action = HistoryAction.REPAIR_OUT;
+        if (!dto.historyDescription) description = 'Reparación finalizada - Equipo operativo';
+      }
+
       await this.prisma.equipmentHistory.create({
         data: {
           equipmentId: id,
-          action: h.action,
-          description: h.description,
+          action,
+          description,
           userId,
-          ...(h.extra ?? {}),
+        },
+      });
+    }
+
+    if (dto.officeId !== undefined && dto.officeId !== ((current as any).office?.id ?? null)) {
+      await this.prisma.equipmentHistory.create({
+        data: {
+          equipmentId: id,
+          action: HistoryAction.TRANSFER,
+          description: dto.historyDescription || `Traslado de oficina`,
+          fromOfficeId: (current as any).office?.id ?? undefined,
+          toOfficeId: dto.officeId,
+          userId,
+        },
+      });
+    } else if (dto.historyDescription && (!dto.status || dto.status === current.status)) {
+      // Manual note or other update with description
+      await this.prisma.equipmentHistory.create({
+        data: {
+          equipmentId: id,
+          action: HistoryAction.NOTE,
+          description: dto.historyDescription,
+          userId,
         },
       });
     }
@@ -237,11 +251,11 @@ export class EquipmentService {
     return this.prisma.equipment.delete({ where: { id } });
   }
 
-  async getNextCode() {
+  async getNextId() {
     const last = await this.prisma.equipment.findFirst({
-      orderBy: { code: 'desc' },
-      select: { code: true },
+      orderBy: { id: 'desc' },
+      select: { id: true },
     });
-    return { nextCode: (last?.code ?? 1999) + 1 };
+    return { nextId: (last?.id ?? 1999) + 1 };
   }
 }

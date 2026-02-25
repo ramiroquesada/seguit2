@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Plus, Search, Filter } from 'lucide-react';
 import { useEquipment } from './hooks/useEquipment';
 import { DataTable, type Column } from '../../components/DataTable/DataTable';
@@ -8,10 +8,13 @@ import { FilterDrawer } from './components/FilterDrawer';
 
 export const EquipmentListPage: React.FC = () => {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const initialOfficeId = searchParams.get('officeId') || '';
+  
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [params, setParams] = useState({
-    page: 1, limit: 50, search: '', sortBy: 'code', order: 'desc',
-    type: '', status: '', cityId: '', sectionId: '', officeId: ''
+    page: 1, limit: 50, search: '', sortBy: 'id', order: 'desc',
+    type: '', status: '', cityId: '', sectionId: '', officeId: initialOfficeId
   });
 
   const { data, isLoading } = useEquipment(params);
@@ -29,7 +32,7 @@ export const EquipmentListPage: React.FC = () => {
   };
 
   const columns: Column<any>[] = [
-    { key: 'code', label: 'Código', sortable: true },
+    { key: 'id', label: 'ID', sortable: true },
     { key: 'type', label: 'Tipo', sortable: true, render: (eq) => <Badge type="category" variant={eq.type} /> },
     { key: 'brandModel', label: 'Marca / Modelo', render: (eq) => (
       <div style={{ display: 'flex', flexDirection: 'column' }}>
@@ -59,7 +62,7 @@ export const EquipmentListPage: React.FC = () => {
           <input 
             type="text" 
             className="form-control" 
-            placeholder="Buscar código, marca, modelo, serie..." 
+            placeholder="Buscar ID, marca, modelo, serie..." 
             style={{ paddingLeft: '40px' }}
             value={params.search}
             onChange={handleSearch}

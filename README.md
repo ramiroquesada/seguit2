@@ -1,12 +1,14 @@
-# Seguit 2.0 - Sistema de Gestión de Inventario IT
+# Seguit 2.0 - Sistema de Gestión de Inventario IT (Soriano)
 
-Seguit 2.0 es una plataforma web moderna diseñada para el seguimiento y gestión de equipamiento informático (PCs, Laptops, Modems, Routers, Impresoras, etc.). Permite gestionar la ubicación de los equipos, su estado actual y mantener un historial detallado de movimientos y reparaciones.
+Seguit 2.0 es una plataforma web moderna diseñada para el seguimiento y gestión de equipamiento informático para la **Intendencia de Soriano**. Permite gestionar la ubicación de los equipos, su estado actual y mantener un historial detallado de movimientos y reparaciones bajo una identidad visual institucional.
 
 ## 🚀 Características Principales
 
+- **Identidad Institucional**: Interfaz personalizada con los colores Teal (`#00A79D`) y Navy Blue (`#003366`) de Soriano.
 - **Dashboard General**: Estadísticas en tiempo real y vista rápida de los últimos ingresos.
 - **Gestión de Equipos**: Listado avanzado con filtros dinámicos por tipo, estado y ubicación jerárquica.
-- **Historial Detallado**: Registro automático y manual de cada acción realizada sobre el equipamiento.
+- **Sistema de Mantenimiento**: Acciones directas para traslados y envío a soporte técnico con registro obligatorio de motivos.
+- **Historial Completo**: Línea de tiempo detallada que registra quién, cuándo y por qué se realizó cada cambio en el equipo.
 - **Ubicaciones Dinámicas**: Estructura de Ciudades -> Secciones -> Oficinas totalmente configurable.
 - **Plantillas de Modelos**: Sistema de plantillas que auto-completan especificaciones técnicas para agilizar el registro de equipos.
 - **Administración de Usuarios**: Panel especializado para gestionar técnicos, sus roles y estados (Activo/Inactivo).
